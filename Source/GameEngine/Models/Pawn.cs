@@ -26,7 +26,7 @@ namespace GameEngine.Library.Models
 
             var color = SetColorOnPawn(Console.ReadLine());
             List<Pawn> pawns = new List<Pawn>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 var pawn = new Pawn(i, default, color);
                 pawns.Add(pawn);
