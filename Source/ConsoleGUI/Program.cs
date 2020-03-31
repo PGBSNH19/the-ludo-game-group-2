@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameEngine.Library.Models;
+using System;
+using System.Linq;
 
 namespace ConsoleGUI
 {
@@ -6,8 +8,16 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-           
+            var menu = new Menu();
+            var dice = new Dice();
+
+            var players = User.GetPlayersAndName(menu.HowManyPlayers());
+
+            foreach (var player in players)
+            {
+                Console.WriteLine($"Name: {player.Name}   Color: {player.Pawns.Select(x => x.Color).FirstOrDefault()}     Dice: {dice.RollDice()}");
+            }
+
         }
     }
 }
