@@ -6,23 +6,14 @@ using System.Text;
 namespace ConsoleGUI
 {
     public class Menu
-    {       
-        public int NumbersOfPlayers()
+    {
+        public int HowManyPlayers()
         {
-            Console.WriteLine($"Number of players");
-            return int.Parse(Console.ReadLine());           
-        }
+            Console.WriteLine($"Number of players:");
+            var amount = int.Parse(Console.ReadLine());
+            Console.WriteLine();
 
-        public List<User> CreateUser(int numberOfPlayers)
-        {
-            List<User> users= new List<User>();
-            for(int i = 0; i < numberOfPlayers; i++)
-            {
-                Console.WriteLine("Please enter your name: ");
-                var userName= Console.ReadLine();
-                users.Add(new User(userName));                           
-            }
-            return users;
+            return amount;
         }
     }
 }
