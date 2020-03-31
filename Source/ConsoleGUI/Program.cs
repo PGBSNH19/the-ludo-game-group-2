@@ -14,7 +14,7 @@ namespace ConsoleGUI
             var players = User.GetPlayersAndName(menu.HowManyPlayers());
             var gameBoard = new GameBoard();
 
-            var game = new Game(players, gameBoard);
+            var turn = new Game(players, gameBoard, dice).RollDice(dice).MovePawn(turn, players.FirstOrDefault(), dice.Roll);
             
             game.MovePawn(game, players.FirstOrDefault(), dice.RollDice());
             foreach (var player in players)
