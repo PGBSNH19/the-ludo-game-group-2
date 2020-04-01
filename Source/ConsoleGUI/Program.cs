@@ -21,6 +21,8 @@ namespace ConsoleGUI
             {
                 Console.WriteLine($"Name: {player.Name}   Color: {player.Pawns.Select(x => x.Color).FirstOrDefault()}     Dice: {dice.Roll}");
             }
+
+            
         }
     }
 }

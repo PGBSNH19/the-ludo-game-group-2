@@ -23,15 +23,13 @@ namespace GameEngine.Library.Models
             Console.WriteLine(Squares.Squares.Count);
 
             var pawnToMove = user.Pawns.FirstOrDefault();
-
+          
             for (int i = 0; i <= diceRoll; i++)
             {
                 Console.WriteLine(pawnToMove.Position += 1);
+                
             }
-            Squares.OccupySquare(game);
-
-        }
-
-        
+                Squares.OccupySquare(game);            
+        }               
     }
 }
