@@ -6,12 +6,14 @@ namespace GameEngine.Library.Models
 {
     public class UserTurn : IUserTurn
     {
-        public IUserTurn PlayerMovePawn(Pawn pawn, int stepToMove)
+        
+
+        public IUserTurn PlayerRoleDice(User user)
         {
             throw new NotImplementedException();
         }
 
-        public IUserTurn PlayerRoleDice(User user)
+        public IUserTurn PlayerMovePawn(Pawn pawn, int stepToMove)
         {
             throw new NotImplementedException();
         }

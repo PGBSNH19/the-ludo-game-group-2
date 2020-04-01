@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameEngine.Library.Models
@@ -9,15 +10,20 @@ namespace GameEngine.Library.Models
         public int PawnID { get; set; }
         public int Position { get; set; }
         public string Color { get; set; }
-
+        public bool HasStarted { get; set; }
+        public int Count { get; set; }
+        public GameBoard GameBoard { get; set; }
         //public int SquareID { get; set; }
         //public int UserID { get; set; }
+        
 
+      
         public Pawn(int PawnID, int Position, string Color)
         {
             this.PawnID = PawnID;
             this.Position = Position;
             this.Color = Color;
+         
         }
 
         public static List<Pawn> GetSetOfPawns()
@@ -27,9 +33,9 @@ namespace GameEngine.Library.Models
             var color = SetColorOnPawn(Console.ReadLine());
             List<Pawn> pawns = new List<Pawn>();
             for (int i = 1; i <= 4; i++)
-            {
-                var pawn = new Pawn(i, default, color);
-                pawns.Add(pawn);
+            {                             
+                    var pawn = new Pawn(i, default, color);
+                    pawns.Add(pawn);            
             }
             return pawns;
         }

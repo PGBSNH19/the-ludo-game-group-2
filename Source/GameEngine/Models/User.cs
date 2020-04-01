@@ -8,6 +8,7 @@ namespace GameEngine.Library.Models
     {
         public string Name { get; set; }
         public List<Pawn> Pawns;
+        public List<Pawn> NonActivePawns = new List<Pawn>();
 
         private User(string name)
         {
