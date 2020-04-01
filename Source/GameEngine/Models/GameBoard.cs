@@ -25,15 +25,9 @@ namespace GameEngine.Library.Models
             return list;
         }
 
-        public void OccupySquare(Game game)
+        public void OccupySquare(GameBoard gameBoard, Pawn pawn)
         {
-            var squareList = game.Squares.Squares;
-            var userList = game.Users;
-
-            var square = squareList
-                .Where(sq => userList.Any(u => u.Pawns.Any(p => p.Position == sq.SquareNumber)))
-                .FirstOrDefault();
-
+            var square = gameBoard.Squares.Where(sq => sq.SquareNumber == pawn.Position).FirstOrDefault();
             square.IsEmpty = false;
         }
     }

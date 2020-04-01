@@ -11,43 +11,48 @@ namespace GameEngine.Library.Models
         public IUserTurn UserTurn { get; set; }
 
         public int GameID { get; set; }
+        public User User { get; set; }
         public List<User> Users { get; set; }
         public int GameBoardID { get; set; }
-        public GameBoard Squares { get; set; }
+        public GameBoard GameBoard { get; set; }
         public Dice Dice { get; set; }
 
-        public Game(List<User> Users, GameBoard Squares, Dice Dice)
+        //Use private variables to be able to reach them in the below methods. 
+        // Step 1. Create private variables for every instance  you need.
+        // Step 2. Instansiate every class that will be used as a parameter.
+        // Step 3. Dont forget to change below code to private variables.
+        private int diceResult;
+        public Game(int numberOfPlayers)
         {
-            this.Users = Users;
-            this.Squares = Squares;
-            this.Dice = Dice;
+            Users = User.GetPlayersAndName(numberOfPlayers);
+            GameBoard = GameBoard;
+            Dice = Dice;
         }
 
-        public  IGame StartMatch(List<User> Users, GameBoard Squares, Dice Dice)
-        {
-            new Game(Users,Squares, Dice);
-            return this;
-        }
+        //public IGame StartMatch(int numberOfPlayers)
+        //{
+        //    new Game(numberOfPlayers);
+        //    return this;
+        //}
 
         public IGame RollDice(Dice dice)
         {
-            Random rnd = new Random();
-
-            dice.Roll = rnd.Next(1, 7);
+            diceResult = dice.RollDice();
             return this;
         }
 
-        public IGame MovePawn(Game game, User user, int diceRoll)
+        //public IGame MovePawn(GameBoard gameBoard, User user, int diceRoll)
+        public IGame MovePawn(Game game)
         {
-            Console.WriteLine(Squares.Squares.Count);
+            Console.WriteLine(GameBoard.Squares.Count);
 
-            var pawnToMove = user.Pawns.FirstOrDefault();
+            var pawnToMove = game.User.Pawns.FirstOrDefault();
 
-            for (int i = 0; i <= diceRoll; i++)
+            for (int i = 0; i <= game.Dice.Roll; i++)
             {
                 Console.WriteLine(pawnToMove.Position += 1);
             }
-            Squares.OccupySquare(game);
+            game.GameBoard.OccupySquare(game.GameBoard, pawnToMove);
             return this;
         }
 
