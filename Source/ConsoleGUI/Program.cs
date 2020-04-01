@@ -16,6 +16,7 @@ namespace ConsoleGUI
 
             var game = new Game(players, gameBoard);
 
+
             
             var currentPawn = game.MovePawn(gameBoard, players.FirstOrDefault(), dice.RollDice());
 
