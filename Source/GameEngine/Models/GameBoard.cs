@@ -14,7 +14,7 @@ namespace GameEngine.Library.Models
             Squares = PopulateBoard();
         }
 
-        public static List<Square> PopulateBoard()
+        public List<Square> PopulateBoard()
         {
             var list = new List<Square>();
             for (int i = 1; i <= 57; i++)

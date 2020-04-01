@@ -12,18 +12,16 @@ namespace GameEngine.Library.Models
         public string Color { get; set; }
         public bool HasStarted { get; set; }
         public int Count { get; set; }
+
         public GameBoard GameBoard { get; set; }
         //public int SquareID { get; set; }
         //public int UserID { get; set; }
-        
-
-      
+              
         public Pawn(int PawnID, int Position, string Color)
         {
             this.PawnID = PawnID;
             this.Position = Position;
-            this.Color = Color;
-         
+            this.Color = Color;        
         }
 
         public static List<Pawn> GetSetOfPawns()
@@ -72,6 +70,20 @@ namespace GameEngine.Library.Models
             }
 
             return "Gold";
+        }
+
+        public void SetStarPosition(Pawn pawn)
+        {
+            if (pawn.Color == "Red")
+                pawn.Position = 0; 
+            if (pawn.Color == "Yellow")
+                pawn.Position = 10;
+            if (pawn.Color == "Green")
+                pawn.Position = 20;
+            if (pawn.Color == "Blue")
+                pawn.Position = 30;
+
+            pawn.HasStarted = true;
         }
     }
 }

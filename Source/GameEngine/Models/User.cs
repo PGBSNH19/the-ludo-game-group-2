@@ -9,11 +9,14 @@ namespace GameEngine.Library.Models
         public string Name { get; set; }
         public List<Pawn> Pawns;
         public List<Pawn> NonActivePawns = new List<Pawn>();
+        public int UserScore { get; set; }
+      
 
-        private User(string name)
+        public User(string name)
         {
             Name = name;
             Pawns = Pawn.GetSetOfPawns();
+            
         }
 
         //private User CreatePlayer(string name) => (new User(name));
