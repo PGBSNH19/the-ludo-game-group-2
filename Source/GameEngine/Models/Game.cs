@@ -18,18 +18,35 @@ namespace GameEngine.Library.Models
             Squares = gameBoard;
         }
 
-        public void MovePawn(Game game, User user, int diceRoll)
+        public Pawn MovePawn(GameBoard Squares, User user, int diceRoll)
         {
-            Console.WriteLine(Squares.Squares.Count);
-
             var pawnToMove = user.Pawns.FirstOrDefault();
-          
-            for (int i = 0; i <= diceRoll; i++)
+
+            Console.WriteLine("DiceRoll: " + diceRoll);
+
+            var endSquare =pawnToMove.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
+
+
+            foreach (var item in Squares.Squares)
             {
-                Console.WriteLine(pawnToMove.Position += 1);
-                
+                if (item.SquareNumber % 57 == 0)
+                {
+                    Console.WriteLine("Congrats");
+                }
+                else if(item.IsEmpty == false)
+                {
+                    Console.WriteLine("You wanna push?????");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    pawnToMove.Position += 1;
+                    Console.WriteLine("PawnPosition: " + pawnToMove.Position);
+                    Squares.OccupySquare(Squares, pawnToMove);
+                }
             }
-                Squares.OccupySquare(game);            
-        }               
+
+            return pawnToMove;
+        }
     }
 }
