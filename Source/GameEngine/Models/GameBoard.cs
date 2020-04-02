@@ -27,7 +27,13 @@ namespace GameEngine.Library.Models
         public void OccupySquare(GameBoard gameBoard, int endSquare)
         {
             var square = gameBoard.Squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
+
+            if (endSquare > 56)
+            {
+                return;
+            }
             square.IsEmpty = false;
+
         }
     }
 }

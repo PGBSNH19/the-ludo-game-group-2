@@ -72,7 +72,7 @@ namespace GameEngine.Library.Models
             return "Gold";
         }
 
-        public void SetStarPosition(Pawn pawn)
+        public void SetStartPosition(Pawn pawn)
         {
             if (pawn.Color == "Red")
                 pawn.Position = 0; 
@@ -83,7 +83,7 @@ namespace GameEngine.Library.Models
             if (pawn.Color == "Blue")
                 pawn.Position = 30;
 
-            pawn.HasStarted = true;
+            //pawn.HasStarted = true;
         }
     }
 }

@@ -15,29 +15,32 @@ namespace ConsoleGUI
             var gameBoard = new GameBoard();
 
             var game = new Game(players, gameBoard);
-            var newMove = new PawnMove();
+            var pawnMove = new PawnMove();
             var count = 0;
 
-            while(players[0].UserScore <= 56)
+            var pawnStartTest = players[0].Pawns;
+            pawnStartTest.FirstOrDefault().SetStartPosition(pawnStartTest.FirstOrDefault());
+
+            while (players[0].UserScore <= 56)
             {
-                count++;
                
                 if(count % 1 == 0)
                 {
-                    var diceRoll = dice.RollDice();
-                    newMove.Move(gameBoard, players[0], diceRoll);
-                    newMove.CheckIfReachedGoal(players[0]);
+                    //var diceRoll = dice.RollDice();
+                    var choice = PawnMove.GetUserChoice();
+                    var userTest = PawnMove.ValidateUserPawn(players[0], choice, gameBoard, dice.RollDice());
+                    //pawnMove.Move(gameBoard, players[0], dice.RollDice());
+                    pawnMove.CheckIfReachedGoal(userTest);
+                    count++;
+
                 }
 
-                if (count % 2 == 0)
-                {
-                    var diceRoll = dice.RollDice();
-                    newMove.Move(gameBoard, players[1], diceRoll);
-                    newMove.CheckIfReachedGoal(players[1]);
-                }
-
-               
-
+                //if (count % 2 == 0)
+                //{
+                //    var diceRoll = dice.RollDice();
+                //    pawnMove.Move(gameBoard, players[1], diceRoll);
+                //    pawnMove.CheckIfReachedGoal(players[1]);
+                //}
 
                 //var currentPawn = newMove.Move(gameBoard, players.FirstOrDefault(), dice.RollDice());
 
