@@ -7,7 +7,9 @@ namespace GameEngine.Library.Models
 {
     public class GameBoard
     {
-        public List<Square> Squares { get; set; }
+        private List<Square> squares;
+
+        public List<Square> Squares { get => squares; set => squares = value; }
 
         public GameBoard()
         {
@@ -25,15 +27,16 @@ namespace GameEngine.Library.Models
         }
 
         // Maybe move to game? 
-        public void OccupySquare(GameBoard gameBoard, int endSquare)
+        public void OccupySquare(/*GameBoard gameBoard,*/ int endSquare)
         {
-            var square = gameBoard.Squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
+            var square = squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
 
             if (endSquare > 56)
             {
                 return;
             }
             square.IsEmpty = false;
+            Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
 
         }
     }

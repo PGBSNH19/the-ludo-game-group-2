@@ -6,18 +6,21 @@ namespace GameEngine.Library.Models
 {
     public class User
     {
+        public int PlayerID { get; set; }
         public string Name { get; set; }
         public List<Pawn> Pawns;
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
 
-        public User(string name)
+        public User(string name, int numberOfPlayers)
         {
+            PlayerID = numberOfPlayers;
             Name = name;
             Pawns = Pawn.GetSetOfPawns();
             NonActivePawns = null;
             UserScore = 0;
         }
+
 
         //private User CreatePlayer(string name) => (new User(name));
 
@@ -30,7 +33,7 @@ namespace GameEngine.Library.Models
                 Console.Write("Name: ");
                 //var user = new User().CreatePlayer(Console.ReadLine());
                 //players.Add(CreatePlayer(Console.ReadLine()));
-                players.Add(new User(Console.ReadLine()));
+                players.Add(new User(Console.ReadLine(), numberOfPlayers));
             }
 
             return players;

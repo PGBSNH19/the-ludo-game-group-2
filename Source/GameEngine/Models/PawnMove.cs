@@ -10,11 +10,11 @@ namespace GameEngine.Library.Models
         //public int Moves { get; set; }
         //public int PawnID { get; set; }
 
-        public static void Move(GameBoard Squares, User user, Pawn pawn, int diceRoll)
+        public static int Move(Pawn pawn, int diceRoll)
         {
             var endSquare = pawn.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
 
-            Console.WriteLine("DiceRoll: " + diceRoll + "for user" + user.Name);
+            //Console.WriteLine("DiceRoll: " + diceRoll + "for user" + user.Name);
 
             for(int i = 0; i < diceRoll; i++)
             {
@@ -29,7 +29,8 @@ namespace GameEngine.Library.Models
                 pawn.HasStarted = true;
             }
 
-            Squares.OccupySquare(Squares, endSquare);
+            return endSquare;
+            //Squares.OccupySquare(Squares, endSquare);
             
             
         }

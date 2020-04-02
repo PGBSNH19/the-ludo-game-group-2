@@ -25,9 +25,26 @@ namespace GameEngine.Library.Models
             Dice = dice;
         }
 
-        public User GetPlayer(string name)
+        public User GetPlayerByName(string name)
         {
             return users.Where(u => u.Name == name).FirstOrDefault();
+        }
+
+        public User GetPlayerByID(int playerID)
+        {
+            var user= users.Where(u => u.PlayerID == playerID).FirstOrDefault();
+            Console.WriteLine($"Player ID= {user.PlayerID}");
+            return user;
+        }
+
+        public  Pawn GetPlayerPawnNotStarted(User user)
+        {
+            return user.Pawns.Where(p=> p.HasStarted == false).FirstOrDefault();
+        }
+
+        public  Pawn GetPlayerPawnByID(User user, int id)
+        {
+            return user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
         }
 
         //public void MoveX(GameBoard gameBoard, User user, Pawn Pawn, int diceRoll)

@@ -18,8 +18,10 @@ namespace GameEngine.Library.Models
         public int RollDice()
         {
             Random rnd = new Random();
-
-            return Roll = rnd.Next(1, 7);
+            Roll = rnd.Next(1, 7);
+            Console.WriteLine($"Lets roll the dice! {Roll}");
+            
+            return Roll;
         }
     }
 }
