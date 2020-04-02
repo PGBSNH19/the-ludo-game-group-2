@@ -13,8 +13,6 @@ namespace GameEngine.Library.Models
         public bool HasStarted { get; set; }
         public int Count { get; set; }
 
-        public GameBoard GameBoard { get; set; }
-              
         public Pawn(int PawnID, int Position, string Color)
         {
             this.PawnID = PawnID;
@@ -69,6 +67,10 @@ namespace GameEngine.Library.Models
 
             return "Gold";
         }
+
+
+
+
 
         public void SetStartPosition(Pawn pawn)
         {

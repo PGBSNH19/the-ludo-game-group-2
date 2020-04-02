@@ -24,6 +24,7 @@ namespace GameEngine.Library.Models
             return list;
         }
 
+        // Maybe move to game? 
         public void OccupySquare(GameBoard gameBoard, int endSquare)
         {
             var square = gameBoard.Squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();

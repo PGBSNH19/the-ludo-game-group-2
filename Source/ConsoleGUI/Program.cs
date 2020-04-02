@@ -8,32 +8,35 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
-            var menu = new Menu();
-            var dice = new Dice();
+            // Creating a LIST of Players, that has its own pawns
+            var playerList = User.GetPlayersAndName(Menu.HowManyPlayers());
+            //
 
-            var players = User.GetPlayersAndName(menu.HowManyPlayers());
+            // Creating ONE Player, that has its own pawns
+            Console.WriteLine("Name: ");
+            var username = Console.ReadLine();
+            var user = new User(username);
+            //
+
+            // GameBoard- LIST of squares
             var gameBoard = new GameBoard();
 
-            var game = new Game(players, gameBoard);
-            var pawnMove = new PawnMove();
-            var count = 0;
+            // Dice- With method Roll Dice
+            var dice = new Dice();
+            
+            
 
-            var pawnStartTest = players[0].Pawns;
-            pawnStartTest.FirstOrDefault().SetStartPosition(pawnStartTest.FirstOrDefault());
 
-            while (players[0].UserScore <= 56)
-            {
 
-                if (count % 1 == 0)
-                {
-                    var choice = PawnMove.GetUserChoice();
-                    var userTest = PawnMove.ValidateUserPawn(players[0], choice, gameBoard, dice.RollDice());
+            ////////////////////////////////////////////
+            ///      Create a new Game/ Match       ///
+            //////////////////////////////////////////
 
-                    count++;
+            var game = new Game(playerList,gameBoard,dice);
+            var jonny = game.GetPlayer(user.Name);
+            
+            
 
-                }
-                Console.ReadLine();
-            }
         }
 
         

@@ -10,13 +10,13 @@ namespace GameEngine.Library.Models
         public List<Pawn> Pawns;
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
-      
 
         public User(string name)
         {
             Name = name;
             Pawns = Pawn.GetSetOfPawns();
-            
+            NonActivePawns = null;
+            UserScore = 0;
         }
 
         //private User CreatePlayer(string name) => (new User(name));

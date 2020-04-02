@@ -5,20 +5,12 @@ using System.Text;
 
 namespace GameEngine.Library.Models
 {
-    public class PawnMove
+    public static class PawnMove
     {
-        public int Moves { get; set; }
-        public int PawnID { get; set; }
+        //public int Moves { get; set; }
+        //public int PawnID { get; set; }
 
-        Pawn pawn = new Pawn(1, 30, "red");
-
-        var okToMove = CheckIfItFits(pawn, 4);
-
-        CheckIfResetIsNeeded(okToMove);
-
-        Move();
-
-        public static Pawn Move(GameBoard Squares, User user, Pawn pawn, int diceRoll)
+        public static void Move(GameBoard Squares, User user, Pawn pawn, int diceRoll)
         {
             var endSquare = pawn.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
 
@@ -39,23 +31,43 @@ namespace GameEngine.Library.Models
 
             Squares.OccupySquare(Squares, endSquare);
             
-            return pawn;
+            
         }
 
-        public bool CheckIfItFits(Pawn pawn, int diceRoll)
+        public static bool IsItLastSquare(User user,Pawn pawn, int diceRoll)
         {
-            if (56 % pawn.Count + 0.0 == 1)
+            if ((pawn.Count + 0.0 + diceRoll) % 56  == 0)
             {
                 Console.WriteLine("You have to stop at 56\n");
                 return false;
             }
             else
             {
+                var pawnRemove= user.Pawns.Where(p=> p.PawnID == pawn.PawnID).FirstOrDefault();
+                user.Pawns.Remove(pawnRemove);
+                user.NonActivePawns.Add(pawnRemove);
                 return true;
             }
         }
 
-        public void CheckIfReachedGoal(User user, Pawn pawn)
+        public static bool ReachedEndPoint(Pawn pawn, int roll)
+        {
+            if (pawn.Count + roll > 56)
+            {
+                return true;
+
+            }
+            else if (pawn.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static void CheckIfReachedGoal(User user, Pawn pawn)
         {
 
             if (pawn.Count == 56)
@@ -75,33 +87,24 @@ namespace GameEngine.Library.Models
             return Convert.ToInt32(choice);
         }
         
-        public static User ValidateUserPawn(User user, int choice, GameBoard gameBoard, int diceRoll)
+        public static Pawn SetPawnToMove(User user, int choice)
         {
-            var pawnMove = new PawnMove();
-            switch (choice)
+            
+            if (choice== 1)
             {
-                case 1:
-                    var pawn = user.Pawns.Where(p => p.HasStarted == false).FirstOrDefault();
-                    pawn.SetStartPosition(pawn);
-                    Move(gameBoard, user, pawn, diceRoll);
-
-                    break;
-                case 2:
-                    Console.WriteLine("1. Pawn 1");
-                    Console.WriteLine("2. Pawn 2");
-                    Console.WriteLine("3. Pawn 3");
-                    Console.WriteLine("4. Pawn 4");
-                    var pawnChoice = Console.ReadLine();
-                    pawn = user.Pawns.Where(p => p.PawnID== Convert.ToInt32(pawnChoice)).FirstOrDefault();
-                    Move(gameBoard, user, pawn, diceRoll);
-                    pawnMove.CheckIfReachedGoal(user,
-                        user.Pawns.Where(p => p.PawnID == Convert.ToInt32(pawnChoice)).FirstOrDefault());
-                    break;
-                default:
-                    break;
+                return user.Pawns.Where(p => p.HasStarted == false).FirstOrDefault();
+                //pawn.SetStartPosition(pawn);
             }
-
-            return user;
+            else
+            {
+                Console.WriteLine("1. Pawn 1");
+                Console.WriteLine("2. Pawn 2");
+                Console.WriteLine("3. Pawn 3");
+                Console.WriteLine("4. Pawn 4");
+                var pawnChoice = Console.ReadLine();
+                return user.Pawns.Where(p => p.PawnID == Convert.ToInt32(pawnChoice)).FirstOrDefault();
+                 
+            }
         }
     }
 }
