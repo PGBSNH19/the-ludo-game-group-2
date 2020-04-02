@@ -14,8 +14,6 @@ namespace GameEngine.Library.Models
         public int Count { get; set; }
 
         public GameBoard GameBoard { get; set; }
-        //public int SquareID { get; set; }
-        //public int UserID { get; set; }
               
         public Pawn(int PawnID, int Position, string Color)
         {
@@ -82,8 +80,6 @@ namespace GameEngine.Library.Models
                 pawn.Position = 20;
             if (pawn.Color == "Blue")
                 pawn.Position = 30;
-
-            //pawn.HasStarted = true;
         }
     }
 }

@@ -10,83 +10,60 @@ namespace GameEngine.Library.Models
         public int Moves { get; set; }
         public int PawnID { get; set; }
 
-        public static int Move(GameBoard Squares,User user, Pawn pawn, int diceRoll)
-        {
-            var pawnToMove = user.Pawns.FirstOrDefault();
-            var endSquare = pawnToMove.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
+        Pawn pawn = new Pawn(1, 30, "red");
 
+        var okToMove = CheckIfItFits(pawn, 4);
+
+        CheckIfResetIsNeeded(okToMove);
+
+        Move();
+
+        public static Pawn Move(GameBoard Squares, User user, Pawn pawn, int diceRoll)
+        {
+            var endSquare = pawn.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
 
             Console.WriteLine("DiceRoll: " + diceRoll + "for user" + user.Name);
 
-            //if(pawnToMove.HasStarted == false) { 
-            //    pawnToMove.SetStarPosition(pawnToMove);
-            //    //kalla på en metod som get nytt värde
-            //}
-           
-            for(int i = pawn.Position; i < endSquare; i++)
+            for(int i = 0; i < diceRoll; i++)
             {
+                pawn.Count += diceRoll;
                 if (pawn.Position == 56)
                 {
                     pawn.Position = 0;
                 }
-                else if (endSquare > 56)
-                {
-                    Console.WriteLine("You have to stop at 56\n");
-                    return 0;
-                }
+                
                 pawn.Position += 1;
                 Console.WriteLine("PawnPosition: " + pawn.Position);
                 pawn.HasStarted = true;
             }
 
-            //foreach (var item in Squares.Squares)
-            //{
-            //    
-            //    else if (item.IsEmpty == false)
-            //    {
-            //        Console.WriteLine("You wanna push?????");
-            //        Console.ReadKey();
-            //    }
-            //    else
-            //    {
-            //        
-
-            //    }
-            //}
-
             Squares.OccupySquare(Squares, endSquare);
-
-            return endSquare;
+            
+            return pawn;
         }
 
-        public void CheckIfReachedGoal(User user)
+        public bool CheckIfItFits(Pawn pawn, int diceRoll)
+        {
+            if (56 % pawn.Count + 0.0 == 1)
+            {
+                Console.WriteLine("You have to stop at 56\n");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void CheckIfReachedGoal(User user, Pawn pawn)
         {
 
-            if (user.Pawns[0].Position % 56 == 0)
+            if (pawn.Count == 56)
             {
-                Console.WriteLine($"You reached the finishline with your {user.Pawns[0].PawnID} pawn" );
-                try
-                {
-                    user.Pawns.Remove(user.Pawns[0]);
-                    user.NonActivePawns.Add(user.Pawns[0]);
-                }
-                catch (Exception e)
-                {
-
-                    Console.WriteLine(e);
-                    Console.ReadKey();
-                }
-                finally
-                {
-                    Console.WriteLine($" {user.Name} reached end with one pawn!!");
-                }
-                
+                user.Pawns.Remove(pawn);
+                user.NonActivePawns.Add(pawn);
+                Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
             }
-
-            //if (user.Pawns.Count == 0)
-            //{
-            //    Console.WriteLine($" {user.Name} won the game!!");
-            //}
 
         }
         
@@ -100,7 +77,7 @@ namespace GameEngine.Library.Models
         
         public static User ValidateUserPawn(User user, int choice, GameBoard gameBoard, int diceRoll)
         {
-
+            var pawnMove = new PawnMove();
             switch (choice)
             {
                 case 1:
@@ -116,7 +93,9 @@ namespace GameEngine.Library.Models
                     Console.WriteLine("4. Pawn 4");
                     var pawnChoice = Console.ReadLine();
                     pawn = user.Pawns.Where(p => p.PawnID== Convert.ToInt32(pawnChoice)).FirstOrDefault();
-                    Move(gameBoard, user,pawn, diceRoll);
+                    Move(gameBoard, user, pawn, diceRoll);
+                    pawnMove.CheckIfReachedGoal(user,
+                        user.Pawns.Where(p => p.PawnID == Convert.ToInt32(pawnChoice)).FirstOrDefault());
                     break;
                 default:
                     break;
