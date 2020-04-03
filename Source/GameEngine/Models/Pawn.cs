@@ -68,11 +68,7 @@ namespace GameEngine.Library.Models
             return "Gold";
         }
 
-
-
-
-
-        public void SetStartPosition(Pawn pawn)
+        public static void SetStartPosition(Pawn pawn)
         {
             if (pawn.Color == "Red")
                 pawn.Position = 0; 

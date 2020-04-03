@@ -19,7 +19,7 @@ namespace GameEngine.Library.Models
         {
             Random rnd = new Random();
             Roll = rnd.Next(1, 7);
-            Console.WriteLine($"Lets roll the dice! {Roll}");
+            Console.WriteLine($"Lets roll the dice! Result: {Roll}");
             
             return Roll;
         }

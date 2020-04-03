@@ -8,7 +8,6 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
-            
 
             // Creating ONE Player, that has its own pawns
             //Console.WriteLine("Name: ");
@@ -22,10 +21,6 @@ namespace ConsoleGUI
             // Dice- With method Roll Dice
             var dice = new Dice();
 
-
-
-
-
             ////////////////////////////////////////////
             ///      Create a new Game/ Match       ///
             //////////////////////////////////////////
@@ -35,35 +30,46 @@ namespace ConsoleGUI
             //
             var game = new Game(playerList,gameBoard,dice);
 
-            // Player one First time //var jonny = game.GetPlayerByName(user.Name);
-            var player1 = game.GetPlayerByID(1);
-
-            // player 1 roll the dice
-            var diceResult = game.Dice.RollDice();
-
-            // Player 1 choose to walk with his 1st pawn
-            var jonnysPawnByID = game.GetPlayerPawnByID(player1, 1);
-
-            if (jonnysPawnByID.HasStarted == false)
+            bool gameEnd= false;
+            while (gameEnd == false)
             {
-                jonnysPawnByID.SetStartPosition(jonnysPawnByID);
-                var landsOnSquare = PawnMove.Move(jonnysPawnByID,diceResult);
-                game.GameBoard.OccupySquare(landsOnSquare);
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    // Get correct player
+                    var player = game.PlayerByID(i+1);
+
+                    //roll the dice
+                    var diceResult = game.Dice.RollDice();
+
+                    //Show a menu, choose wich pawn to move and returns that number/ ID
+                    var pawnID = PawnMove.GetUserChoice();
+                    Console.WriteLine();
+
+                    // Get the pawn that player choosed
+                    var pawn = game.PawnByID(player, pawnID);
+
+                    // Time to move pawn, 
+                    //If it hasn't moved before 
+                    if (pawn.HasStarted == false)
+                    {
+                        Pawn.SetStartPosition(pawn);
+                        pawn.HasStarted = true;
+                    }
+
+                    //Move Pawn, return landing square
+                    var landsOnSquare = PawnMove.Move(pawn, diceResult);
+
+                    // If pawn position is higher than 56, remove and add to a seperate list
+                    gameEnd= game.CheckIfReachedGoal(player, pawn, gameEnd);
+
+                    //  Occupie square that pawn ends up on
+                    game.GameBoard.OccupySquare(landsOnSquare);
+
+                    
+                    //
+                }
             }
-            else
-            {
-                var landsOnSquare = PawnMove.Move(jonnysPawnByID, diceResult);
-                game.GameBoard.OccupySquare(landsOnSquare);
-
-            }
-
-
-
-
-            //
-
+            
         }
-
-
     }
 }

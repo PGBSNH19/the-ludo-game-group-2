@@ -37,6 +37,9 @@ namespace GameEngine.Library.Models
             }
             square.IsEmpty = false;
             Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
 
         }
     }

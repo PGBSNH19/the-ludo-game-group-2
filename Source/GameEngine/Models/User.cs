@@ -17,7 +17,6 @@ namespace GameEngine.Library.Models
             PlayerID = numberOfPlayers;
             Name = name;
             Pawns = Pawn.GetSetOfPawns();
-            NonActivePawns = null;
             UserScore = 0;
         }
 
@@ -33,7 +32,7 @@ namespace GameEngine.Library.Models
                 Console.Write("Name: ");
                 //var user = new User().CreatePlayer(Console.ReadLine());
                 //players.Add(CreatePlayer(Console.ReadLine()));
-                players.Add(new User(Console.ReadLine(), numberOfPlayers));
+                players.Add(new User(Console.ReadLine(), i+1));
             }
 
             return players;

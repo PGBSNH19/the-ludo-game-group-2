@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GameEngine.Library.Models
 {
@@ -30,10 +31,10 @@ namespace GameEngine.Library.Models
             return users.Where(u => u.Name == name).FirstOrDefault();
         }
 
-        public User GetPlayerByID(int playerID)
+        public User PlayerByID(int playerID)
         {
             var user= users.Where(u => u.PlayerID == playerID).FirstOrDefault();
-            Console.WriteLine($"Player ID= {user.PlayerID}");
+            Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
             return user;
         }
 
@@ -42,33 +43,30 @@ namespace GameEngine.Library.Models
             return user.Pawns.Where(p=> p.HasStarted == false).FirstOrDefault();
         }
 
-        public  Pawn GetPlayerPawnByID(User user, int id)
+        public Pawn PawnByID(User user, int id)
         {
-            return user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
+            var pawn= user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
+            Console.WriteLine($"You chose {pawn.PawnID}");
+            Thread.Sleep(300);
+            return pawn;
         }
 
-        //public void MoveX(GameBoard gameBoard, User user, Pawn Pawn, int diceRoll)
-        //{
-        //    var endSquare = Pawn.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
-
-        //    Console.WriteLine("DiceRoll: " + diceRoll + "for user" + user.Name);
-
-        //    for (int i = 0; i < diceRoll; i++)
-        //    {
-        //        pawn.Count += diceRoll;
-        //        if (pawn.Position == 56)
-        //        {
-        //            pawn.Position = 0;
-        //        }
-
-        //        pawn.Position += 1;
-        //        Console.WriteLine("PawnPosition: " + pawn.Position);
-        //        pawn.HasStarted = true;
-        //    }
-
-        //    Squares.OccupySquare(Squares, endSquare);
-
-
-        //}
+        public bool CheckIfReachedGoal(User user, Pawn pawn, bool finishline)
+        {
+            if (pawn.Count == 56)
+            {
+                user.Pawns.Remove(pawn);
+                user.NonActivePawns.Add(pawn);
+                Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
+                Console.WriteLine($"NonActive: {user.NonActivePawns.Count}");
+                finishline = false;
+            }
+            if (user.Pawns.Count==0)
+            {
+                Console.WriteLine("Congrats you won!");
+                finishline = true;
+            }
+            return finishline;
+        }
     }
 }

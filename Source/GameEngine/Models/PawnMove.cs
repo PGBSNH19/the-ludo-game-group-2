@@ -12,27 +12,30 @@ namespace GameEngine.Library.Models
 
         public static int Move(Pawn pawn, int diceRoll)
         {
-            var endSquare = pawn.Position + diceRoll; // Use this when running application 4Reeeeeaaaaall Boooyyy!!!
+            var endSquare = pawn.Position + diceRoll;
 
-            //Console.WriteLine("DiceRoll: " + diceRoll + "for user" + user.Name);
-
-            for(int i = 0; i < diceRoll; i++)
+            if (pawn.Count + diceRoll > 56)
             {
-                pawn.Count += diceRoll;
-                if (pawn.Position == 56)
-                {
-                    pawn.Position = 0;
-                }
-                
-                pawn.Position += 1;
-                Console.WriteLine("PawnPosition: " + pawn.Position);
-                pawn.HasStarted = true;
+                Console.WriteLine($"You have to stop at 56\n");
+                return pawn.Position;
             }
+            else
+            {
+                for (int i = 0; i < diceRoll; i++)
+                {
+                    if (pawn.Position == 56)
+                    {
+                        pawn.Position = 0;
+                    }
 
-            return endSquare;
-            //Squares.OccupySquare(Squares, endSquare);
-            
-            
+                    pawn.Position += 1;
+
+                    Console.WriteLine("Position: " + pawn.Position);
+                }
+                pawn.Count += diceRoll;
+                Console.WriteLine($"Count: {pawn.Count}");
+                return endSquare;
+            }
         }
 
         public static bool IsItLastSquare(User user,Pawn pawn, int diceRoll)
@@ -68,22 +71,12 @@ namespace GameEngine.Library.Models
             }
         }
 
-        public static void CheckIfReachedGoal(User user, Pawn pawn)
-        {
-
-            if (pawn.Count == 56)
-            {
-                user.Pawns.Remove(pawn);
-                user.NonActivePawns.Add(pawn);
-                Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
-            }
-
-        }
-        
         public static int GetUserChoice()
         {
-            Console.WriteLine("1. Walk unWalked Pawn");
-            Console.WriteLine("2. Choose Pawn");
+            Console.WriteLine("1. Pawn 1");
+            Console.WriteLine("2. Pawn 2");
+            Console.WriteLine("3. Pawn 3");
+            Console.WriteLine("4. Pawn 4");
             var choice= Console.ReadLine();
             return Convert.ToInt32(choice);
         }
