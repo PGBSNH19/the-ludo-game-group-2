@@ -18,18 +18,17 @@ namespace GameEngine.Library.Models
             Pawn = pawn;
         }
 
-        public int Move(int diceRoll)
+        public int Move(int dieRoll)
         {
-            var endSquare = pawn.Position + diceRoll;
+            var endSquare = pawn.Position + dieRoll;
 
-            if (pawn.Count + diceRoll > 56)
+            if (pawn.Count + dieRoll > 56)
             {
-                Console.WriteLine($"You have to stop at 56\n");
                 return pawn.Position;
             }
             else
             {
-                for (int i = 0; i < diceRoll; i++)
+                for (int i = 0; i < dieRoll; i++)
                 {
                     if (pawn.Position == 56)
                     {
@@ -38,10 +37,10 @@ namespace GameEngine.Library.Models
 
                     pawn.Position += 1;
 
-                    Console.WriteLine("Position: " + pawn.Position);
+                    //Console.WriteLine("Position: " + pawn.Position);
                 }
-                pawn.Count += diceRoll;
-                Console.WriteLine($"Count: {pawn.Count}");
+                pawn.Count += dieRoll;
+                //Console.WriteLine($"Count: {pawn.Count}");
                 return endSquare;
             }
         }
@@ -79,15 +78,5 @@ namespace GameEngine.Library.Models
             }
         }
 
-        public static int PawnMenu(User user)
-        {
-            foreach (var pawn in user.Pawns)
-            {
-                Console.WriteLine($"Pawn: {pawn.PawnID}");
-            }
-            Console.Write("Enter pawn to move: =>");
-            var choice = Console.ReadLine();
-            return Convert.ToInt32(choice);
-        }
     }
 }

@@ -18,12 +18,12 @@ namespace GameEngine.Library.Models
 
         public List<Square> PopulateBoard()
         {
-            var list = new List<Square>();
+            squares = new List<Square>();
             for (int i = 1; i <= 57; i++)
             {
-                list.Add(new Square(i));
+                squares.Add(new Square(i));
             }
-            return list;
+            return squares;
         }
 
         // Maybe move to game? 
@@ -36,10 +36,10 @@ namespace GameEngine.Library.Models
                 return;
             }
             square.IsEmpty = false;
-            Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("--------------------------------------------------------------------------------------------");
+            //Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
+            //Console.WriteLine();
+            //Console.WriteLine();
+            //Console.WriteLine("--------------------------------------------------------------------------------------------");
 
         }
     }

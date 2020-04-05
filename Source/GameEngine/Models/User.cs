@@ -23,7 +23,7 @@ namespace GameEngine.Library.Models
 
         //private User CreatePlayer(string name) => (new User(name));
 
-        public static List<User> GetPlayersAndName(int numberOfPlayers)
+        public static List<User> CreateListOfPlayers(int numberOfPlayers)
         {
             var players = new List<User>();
             for (int i = 0; i < numberOfPlayers; i++)

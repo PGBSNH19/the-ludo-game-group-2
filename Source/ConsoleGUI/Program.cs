@@ -9,7 +9,6 @@ namespace ConsoleGUI
         static void Main(string[] args)
         {
 
-
             ////////////////////////////////////////////
             ///      Create a new Game/ Match       ///
             //////////////////////////////////////////
@@ -18,12 +17,12 @@ namespace ConsoleGUI
             var gameBoard = new GameBoard();
 
             // Dice- With method Roll Dice
-            var dice = new Dice();
+            var die = new Die();
 
             // Creating a LIST of Players, that has its own pawns
-            var playerList = User.GetPlayersAndName(Menu.HowManyPlayers());
+            var playerList = User.CreateListOfPlayers(RunGUI.NumberOfPlayers());
             //
-            var game = new Game(playerList,gameBoard,dice);
+            var game = new Game(playerList,gameBoard,die);
             #endregion
             bool gameEnd = false;
             while (gameEnd == false)
@@ -32,9 +31,11 @@ namespace ConsoleGUI
                 {
                     // Get correct player
                     var player = game.PlayerByID(i+1);
-
+                    RunGUI.ShowWhichPlayer(player);
                     //roll the dice
-                    var diceResult = game.Dice.RollDice();
+                    var dieResult = game.Dice.RollDice();
+                    RunGUI.ShowDie(dieResult);
+
 
                     #region Previous Pawn Menu and Get Pawn Method
                     ////Show a menu, choose wich pawn to move and returns that number/ ID
@@ -45,7 +46,9 @@ namespace ConsoleGUI
                     //var pawn = game.PawnByID(player, pawnID);
                     #endregion
                     // Show a Menu of pawns => return choosen if not NULL
-                    var pawn = game.GetPawnByMenu(player);
+                    var IDOnPawn = RunGUI.TimeToChoosePawn(player); // Crashes when entering pawnID that no longer exist. 
+                    var pawn = game.GetPawnByID(player,IDOnPawn); // This happened after seperating GUI with logic
+
 
                     // Time to move pawn, 
                     //If it hasn't moved before 
@@ -61,12 +64,14 @@ namespace ConsoleGUI
 
                     //Creates a new Move
                     var pawnMove = new PawnMove(pawn);
-
                     //Move Pawn, return landing square
-                    var landingSquare = pawnMove.Move(diceResult);
+                    var landingSquare = pawnMove.Move(dieResult);
+                    RunGUI.WalkWithPawn(pawn, dieResult);
+                    //Console.Clear();
+
 
                     // If pawn position is higher than 56, remove and add to a seperate list
-                    gameEnd= game.CheckIfReachedGoal(player, pawn, gameEnd);
+                    gameEnd = game.CheckIfReachedGoal(player, pawn, gameEnd);
 
                     //  Occupie square that pawn ends up on
                     game.GameBoard.OccupySquare(landingSquare);

@@ -8,7 +8,7 @@ namespace GameEngine.Library.Models
 {
     public class Game
     {
-        private Dice dice;
+        private Die dice;
         private GameBoard gameBoard;
         private List<User> users;
 
@@ -16,10 +16,10 @@ namespace GameEngine.Library.Models
         //public int GameBoardID { get; set; }
         public List<User> Users { get => users; set => users = value; }
         public GameBoard GameBoard { get => gameBoard; set => gameBoard = value; }
-        public Dice Dice { get => dice; set => dice = value; }
+        public Die Dice { get => dice; set => dice = value; }
 
 
-        public Game(List<User> users, GameBoard gameBoard, Dice dice)
+        public Game(List<User> users, GameBoard gameBoard, Die dice)
         {
             Users = users;
             GameBoard = gameBoard;
@@ -28,9 +28,7 @@ namespace GameEngine.Library.Models
 
         public User PlayerByID(int playerID)
         {
-            var user= users.Where(u => u.PlayerID == playerID).FirstOrDefault();
-            Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
-            return user;
+            return users.Where(u => u.PlayerID == playerID).FirstOrDefault();
         }
 
         private Pawn PawnByID(User user, int id)
@@ -57,11 +55,10 @@ namespace GameEngine.Library.Models
             return finishline;
         }
 
-        public Pawn GetPawnByMenu(User user)
+        public Pawn GetPawnByID(User user, int pawnID)
         {
             while (true)
             {
-                var pawnID = PawnMove.PawnMenu(user);
                 var pawn = PawnByID(user, pawnID);
                 if (pawn != null)
                 {
