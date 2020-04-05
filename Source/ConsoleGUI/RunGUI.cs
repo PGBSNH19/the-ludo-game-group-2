@@ -47,7 +47,7 @@ namespace ConsoleGUI
 
         public static void WalkWithPawn(Pawn pawn,int dieResult)
         {
-            var start = pawn.Count - dieResult;
+            var start = (pawn.Count - dieResult)+ 1;
             var end = pawn.Count;
             if (pawn.Count + dieResult > 56)
             {
@@ -56,20 +56,12 @@ namespace ConsoleGUI
             }
             else
             {
-                if (start <= 0)
-                {
-                    start = 1;
-                }
-
                 for (int i = start; i <= end; i++)
                 {
                     Console.Write($"_{i} ");
                     Thread.Sleep(800);
                 }
             }
-
-
-
         }
     }
 }
