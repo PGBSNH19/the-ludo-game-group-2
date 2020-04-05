@@ -46,38 +46,26 @@ namespace GameEngine.Library.Models
 
         private static string SetColorOnPawn(string userChoice)
         {
-
-            switch (userChoice)
+            return userChoice switch
             {
-                case "1":
-                    return "Blue";
-
-                case "2":
-                    return "Green";
-
-                case "3":
-                    return "Red";
-
-                case "4":
-                    return "Yellow";
-
-                default:
-                    break;
-            }
-
-            return "Gold";
+                "1" => "Blue",
+                "2" => "Green",
+                "3" => "Red",
+                "4" => "Yellow",
+                _ => "Gold"
+            };
         }
 
         public static void SetStartPosition(Pawn pawn)
         {
-            if (pawn.Color == "Red")
-                pawn.Position = 0; 
-            if (pawn.Color == "Yellow")
-                pawn.Position = 10;
-            if (pawn.Color == "Green")
-                pawn.Position = 20;
-            if (pawn.Color == "Blue")
-                pawn.Position = 30;
+            pawn.Position = pawn.Color switch
+            {
+                "Red" => 0,
+                "Yellow" => 10,
+                "Green" => 20,
+                "Blue" => 30,
+                 _=> 0
+            };
         }
 
         public static void IfNotStartedSetStartPosition(Pawn pawn)
