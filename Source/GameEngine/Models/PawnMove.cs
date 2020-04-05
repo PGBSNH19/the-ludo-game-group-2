@@ -5,12 +5,20 @@ using System.Text;
 
 namespace GameEngine.Library.Models
 {
-    public static class PawnMove
+    public class PawnMove
     {
+        private Pawn pawn;
+
         //public int Moves { get; set; }
         //public int PawnID { get; set; }
+        public Pawn Pawn { get => pawn; set => pawn = value; }
 
-        public static int Move(Pawn pawn, int diceRoll)
+        public PawnMove(Pawn pawn)
+        {
+            Pawn = pawn;
+        }
+
+        public int Move(int diceRoll)
         {
             var endSquare = pawn.Position + diceRoll;
 
@@ -38,23 +46,23 @@ namespace GameEngine.Library.Models
             }
         }
 
-        public static bool IsItLastSquare(User user,Pawn pawn, int diceRoll)
+        public bool IsItLastSquare(User user, int diceRoll)
         {
-            if ((pawn.Count + 0.0 + diceRoll) % 56  == 0)
+            if ((pawn.Count + 0.0 + diceRoll) % 56 == 0)
             {
                 Console.WriteLine("You have to stop at 56\n");
                 return false;
             }
             else
             {
-                var pawnRemove= user.Pawns.Where(p=> p.PawnID == pawn.PawnID).FirstOrDefault();
+                var pawnRemove = user.Pawns.Where(p => p.PawnID == pawn.PawnID).FirstOrDefault();
                 user.Pawns.Remove(pawnRemove);
                 user.NonActivePawns.Add(pawnRemove);
                 return true;
             }
         }
 
-        public static bool ReachedEndPoint(Pawn pawn, int roll)
+        public bool ReachedEndPoint(int roll)
         {
             if (pawn.Count + roll > 56)
             {
@@ -71,34 +79,15 @@ namespace GameEngine.Library.Models
             }
         }
 
-        public static int GetUserChoice()
+        public static int PawnMenu(User user)
         {
-            Console.WriteLine("1. Pawn 1");
-            Console.WriteLine("2. Pawn 2");
-            Console.WriteLine("3. Pawn 3");
-            Console.WriteLine("4. Pawn 4");
-            var choice= Console.ReadLine();
+            foreach (var pawn in user.Pawns)
+            {
+                Console.WriteLine($"Pawn: {pawn.PawnID}");
+            }
+            Console.Write("Enter pawn to move: =>");
+            var choice = Console.ReadLine();
             return Convert.ToInt32(choice);
-        }
-        
-        public static Pawn SetPawnToMove(User user, int choice)
-        {
-            
-            if (choice== 1)
-            {
-                return user.Pawns.Where(p => p.HasStarted == false).FirstOrDefault();
-                //pawn.SetStartPosition(pawn);
-            }
-            else
-            {
-                Console.WriteLine("1. Pawn 1");
-                Console.WriteLine("2. Pawn 2");
-                Console.WriteLine("3. Pawn 3");
-                Console.WriteLine("4. Pawn 4");
-                var pawnChoice = Console.ReadLine();
-                return user.Pawns.Where(p => p.PawnID == Convert.ToInt32(pawnChoice)).FirstOrDefault();
-                 
-            }
         }
     }
 }

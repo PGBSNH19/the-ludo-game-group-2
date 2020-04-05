@@ -26,11 +26,6 @@ namespace GameEngine.Library.Models
             Dice = dice;
         }
 
-        public User GetPlayerByName(string name)
-        {
-            return users.Where(u => u.Name == name).FirstOrDefault();
-        }
-
         public User PlayerByID(int playerID)
         {
             var user= users.Where(u => u.PlayerID == playerID).FirstOrDefault();
@@ -38,16 +33,9 @@ namespace GameEngine.Library.Models
             return user;
         }
 
-        public  Pawn GetPlayerPawnNotStarted(User user)
+        private Pawn PawnByID(User user, int id)
         {
-            return user.Pawns.Where(p=> p.HasStarted == false).FirstOrDefault();
-        }
-
-        public Pawn PawnByID(User user, int id)
-        {
-            var pawn= user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
-            Console.WriteLine($"You chose {pawn.PawnID}");
-            Thread.Sleep(300);
+            var pawn = user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
             return pawn;
         }
 
@@ -67,6 +55,19 @@ namespace GameEngine.Library.Models
                 finishline = true;
             }
             return finishline;
+        }
+
+        public Pawn GetPawnByMenu(User user)
+        {
+            while (true)
+            {
+                var pawnID = PawnMove.PawnMenu(user);
+                var pawn = PawnByID(user, pawnID);
+                if (pawn != null)
+                {
+                    return pawn;
+                }
+            }
         }
     }
 }

@@ -79,5 +79,14 @@ namespace GameEngine.Library.Models
             if (pawn.Color == "Blue")
                 pawn.Position = 30;
         }
+
+        public static void IfNotStartedSetStartPosition(Pawn pawn)
+        {
+            if (pawn.HasStarted == false)
+            {
+                Pawn.SetStartPosition(pawn);
+                pawn.HasStarted = true;
+            }
+        }
     }
 }

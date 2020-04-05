@@ -12,7 +12,7 @@ namespace GameEngine.Library.Models
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
 
-        public User(string name, int numberOfPlayers)
+        private User(string name, int numberOfPlayers)
         {
             PlayerID = numberOfPlayers;
             Name = name;
