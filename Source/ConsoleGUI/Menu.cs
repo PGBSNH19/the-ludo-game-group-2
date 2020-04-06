@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ConsoleGUI
 {
-    public class Menu
+    public static class Menu
     {
         public static int HowManyPlayers()
         {

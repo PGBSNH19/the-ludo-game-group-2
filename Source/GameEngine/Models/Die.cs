@@ -4,11 +4,11 @@ using System.Text;
 
 namespace GameEngine.Library.Models
 {
-    public class Dice
+    public class Die
     {
         private int roll;
 
-        public Dice()
+        public Die()
         {
             Roll = default;
         }
@@ -19,7 +19,6 @@ namespace GameEngine.Library.Models
         {
             Random rnd = new Random();
             Roll = rnd.Next(1, 7);
-            Console.WriteLine($"Lets roll the dice! Result: {Roll}");
             
             return Roll;
         }

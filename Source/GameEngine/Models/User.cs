@@ -12,7 +12,7 @@ namespace GameEngine.Library.Models
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
 
-        public User(string name, int numberOfPlayers)
+        private User(string name, int numberOfPlayers)
         {
             PlayerID = numberOfPlayers;
             Name = name;
@@ -20,18 +20,12 @@ namespace GameEngine.Library.Models
             UserScore = 0;
         }
 
-
-        //private User CreatePlayer(string name) => (new User(name));
-
-        public static List<User> GetPlayersAndName(int numberOfPlayers)
+        public static List<User> CreateListOfPlayers(int numberOfPlayers)
         {
             var players = new List<User>();
             for (int i = 0; i < numberOfPlayers; i++)
             {
-
                 Console.Write("Name: ");
-                //var user = new User().CreatePlayer(Console.ReadLine());
-                //players.Add(CreatePlayer(Console.ReadLine()));
                 players.Add(new User(Console.ReadLine(), i+1));
             }
 
