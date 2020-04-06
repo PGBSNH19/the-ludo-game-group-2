@@ -33,47 +33,10 @@ namespace GameEngine.Library.Models
                     }
 
                     pawn.Position += 1;
-
-                    //Console.WriteLine("Position: " + pawn.Position);
                 }
                 pawn.Count += dieRoll;
-                //Console.WriteLine($"Count: {pawn.Count}");
                 return endSquare;
             }
         }
-
-        public bool IsItLastSquare(User user, int diceRoll)
-        {
-            if ((pawn.Count + 0.0 + diceRoll) % 56 == 0)
-            {
-                Console.WriteLine("You have to stop at 56\n");
-                return false;
-            }
-            else
-            {
-                var pawnRemove = user.Pawns.Where(p => p.PawnID == pawn.PawnID).FirstOrDefault();
-                user.Pawns.Remove(pawnRemove);
-                user.NonActivePawns.Add(pawnRemove);
-                return true;
-            }
-        }
-
-        public bool ReachedEndPoint(int roll)
-        {
-            if (pawn.Count + roll > 56)
-            {
-                return true;
-
-            }
-            else if (pawn.Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
     }
 }

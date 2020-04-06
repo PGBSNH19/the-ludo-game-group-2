@@ -26,8 +26,7 @@ namespace GameEngine.Library.Models
             return squares;
         }
 
-        // Maybe move to game? 
-        public void OccupySquare(/*GameBoard gameBoard,*/ int endSquare)
+        public void OccupySquare(int endSquare)
         {
             var square = squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
 
@@ -36,11 +35,6 @@ namespace GameEngine.Library.Models
                 return;
             }
             square.IsEmpty = false;
-            //Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
-            //Console.WriteLine();
-            //Console.WriteLine();
-            //Console.WriteLine("--------------------------------------------------------------------------------------------");
-
         }
     }
 }
