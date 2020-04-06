@@ -28,7 +28,6 @@ namespace GameEngine.Library.Models
             var players = new List<User>();
             for (int i = 0; i < numberOfPlayers; i++)
             {
-
                 Console.Write("Name: ");
                 //var user = new User().CreatePlayer(Console.ReadLine());
                 //players.Add(CreatePlayer(Console.ReadLine()));
