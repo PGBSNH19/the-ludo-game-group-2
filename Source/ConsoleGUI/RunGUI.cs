@@ -1,4 +1,5 @@
 ﻿using GameEngine.Library.Models;
+using GameEngine.Library;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace ConsoleGUI
         public static void ShowWhichPlayer(User user)
         {
             Console.Clear();
-            Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
+            Console.WriteLine($"Player ID: {user.UserID} Name: {user.Name}");
             Console.WriteLine("Enter key...");
             Console.ReadKey();
         }
@@ -42,10 +43,10 @@ namespace ConsoleGUI
             Console.ReadKey();
         }
 
-        public static int TimeToChoosePawn(User user)
+        public static int TimeToChoosePawn(User user, GameMotor gameMotor)
         {
             Console.Clear();
-            foreach (var pawn in user.Pawns)
+            foreach (var pawn in gameMotor.CountActivePawns(user))
             {
                 Console.WriteLine($"Pawn: {pawn.PawnID}");
             }
@@ -68,7 +69,7 @@ namespace ConsoleGUI
                 for (int i = start; i <= end; i++)
                 {
                     Console.Write($"_{i} ");
-                    Thread.Sleep(800);
+                    //Thread.Sleep(800);
                 }
             }
             Console.WriteLine();

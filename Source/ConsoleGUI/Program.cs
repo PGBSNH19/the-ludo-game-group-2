@@ -1,4 +1,5 @@
-﻿using GameEngine.Library.Models;
+﻿using GameEngine.Library;
+using GameEngine.Library.Models;
 using System;
 using System.Linq;
 
@@ -8,50 +9,50 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
-
-            ////////////////////////////////////////////
-            ///      Create a new Game/ Match       ///
-            //////////////////////////////////////////
             #region Creating new GAME
-            var gameBoard = new GameBoard();
-            var die = new Die();
-            var playerList = User.CreateListOfPlayers(RunGUI.NumberOfPlayers());
-            var game = new Game(playerList,gameBoard,die);
+           
+            var gameInitializer = new GameInitializer();
+            var gameMotor = new GameMotor();
+
+            //var die = new Die();
+            var playerList = gameInitializer.CreateListOfPlayers(RunGUI.NumberOfPlayers());
+            var gameBoard = gameInitializer.PopulateBoard();
+
+            var game = new Game(gameInitializer);
             #endregion
             
-            bool gameEnd = false;
-            while (gameEnd == false)
+            bool gameHasEnd = false;
+            while (gameHasEnd == false)
             {
                 for (int i = 0; i < playerList.Count; i++)
                 {
                     // Get correct player
-                    var player = game.PlayerByID(i+1);
+                    var player = gameInitializer.PlayerByID(playerList, i+1);
                     RunGUI.ShowWhichPlayer(player);
                     //roll the dice
-                    var dieResult = game.Dice.RollDice();
-                    RunGUI.ShowDie(dieResult);
+                    var dieResult = gameMotor.RollDie(gameInitializer.Die);
+                    RunGUI.ShowDie(dieResult.Roll);
 
                     // Show a Menu of pawns => return choosen if not NULL
-                    var IDOnPawn = RunGUI.TimeToChoosePawn(player); // Crashes when entering pawnID that no longer exist. 
-                    var pawn = game.GetPawnByID(player,IDOnPawn); // This happened after seperating GUI from the logic
+                    var IDOnPawn = RunGUI.TimeToChoosePawn(player, gameMotor); // Crashes when entering pawnID that no longer exist. 
+                    var pawn = gameMotor.GetPawnByID(player,IDOnPawn); // This happened after seperating GUI from the logic
 
                     // Time to move pawn, 
-                    Pawn.IfNotStartedSetStartPosition(pawn);
+                    gameInitializer.IfNotStartedSetStartPosition(pawn);
 
                     //Creates a new Move
-                    var pawnMove = new PawnMove(pawn);
+                   
                     //Move Pawn, return landing square
-                    var landingSquare = pawnMove.Move(dieResult);
-                    RunGUI.WalkWithPawn(pawn, dieResult);
+                    var landingSquare = gameMotor.Move(pawn, dieResult.Roll);
+                    RunGUI.WalkWithPawn(pawn, dieResult.Roll);
 
                     // If pawn position is higher than 56, remove and add to a seperate list
-                    gameEnd = game.CheckIfReachedGoal(player, pawn, gameEnd);
+                    gameHasEnd = gameMotor.CheckIfReachedGoal(player, pawn, gameHasEnd);
 
                     //  Occupie square that pawn ends up on
-                    game.GameBoard.OccupySquare(landingSquare);
-
-                    
-                    //
+                    gameMotor.OccupySquare(gameBoard, landingSquare);
+                   
+                   //
                 }
             }
             
