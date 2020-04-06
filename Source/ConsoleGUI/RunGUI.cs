@@ -10,6 +10,7 @@ namespace ConsoleGUI
     {
         public static int NumberOfPlayers()
         {
+            Console.Clear();
             Console.Write($"Number of players: ");
             var amount = int.Parse(Console.ReadLine());
             return amount;
@@ -27,16 +28,23 @@ namespace ConsoleGUI
 
         public static void ShowWhichPlayer(User user)
         {
+            Console.Clear();
             Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
+            Console.WriteLine("Enter key...");
+            Console.ReadKey();
         }
 
         public static void ShowDie(int rollResult)
         {
+            Console.Clear();
             Console.WriteLine($"Lets roll the dice! Result: {rollResult}");
+            Console.WriteLine("Enter key...");
+            Console.ReadKey();
         }
 
         public static int TimeToChoosePawn(User user)
         {
+            Console.Clear();
             foreach (var pawn in user.Pawns)
             {
                 Console.WriteLine($"Pawn: {pawn.PawnID}");
@@ -47,6 +55,7 @@ namespace ConsoleGUI
 
         public static void WalkWithPawn(Pawn pawn,int dieResult)
         {
+            Console.Clear();
             var start = (pawn.Count - dieResult)+ 1;
             var end = pawn.Count;
             if (pawn.Count + dieResult > 56)
@@ -62,6 +71,9 @@ namespace ConsoleGUI
                     Thread.Sleep(800);
                 }
             }
+            Console.WriteLine();
+            Console.WriteLine("Enter key...");
+            Console.ReadKey();
         }
     }
 }
