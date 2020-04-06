@@ -12,11 +12,16 @@ namespace GameEngine.Library.Models
         public string Color { get; set; }
         public bool HasStarted { get; set; }
         public int Count { get; set; }
+<<<<<<< Updated upstream
+=======
+        public bool HasReachedGoal { get; set; }
+>>>>>>> Stashed changes
 
         public Pawn(int PawnID, int Position, string Color)
         {
             this.PawnID = PawnID;
             this.Position = Position;
+<<<<<<< Updated upstream
             this.Color = Color;        
         }
 
@@ -76,5 +81,12 @@ namespace GameEngine.Library.Models
                 pawn.HasStarted = true;
             }
         }
+=======
+            this.Color = Color;
+            this.HasReachedGoal = false;
+        }
+
+
+>>>>>>> Stashed changes
     }
 }

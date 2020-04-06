@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameEngine.Library.Models
@@ -12,10 +13,15 @@ namespace GameEngine.Library.Models
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
 
+<<<<<<< Updated upstream
         private User(string name, int numberOfPlayers)
+=======
+        public User( string name, int idOfPlayer, List<Pawn> pawns)
+>>>>>>> Stashed changes
         {
             PlayerID = numberOfPlayers;
             Name = name;
+<<<<<<< Updated upstream
             Pawns = Pawn.GetSetOfPawns();
             UserScore = 0;
         }
@@ -31,5 +37,17 @@ namespace GameEngine.Library.Models
 
             return players;
         }
+=======
+            Pawns = pawns;
+            UserScore = 0;
+        }
+
+        public Pawn PawnByID(int id)
+        {
+            return Pawns.Where(p => p.PawnID == id).FirstOrDefault();
+        }
+
+
+>>>>>>> Stashed changes
     }
 }

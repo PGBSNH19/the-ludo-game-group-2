@@ -17,5 +17,7 @@ namespace GameEngine.Library.Models
             SquareNumber = number;
             IsEmpty = true;
         }
+
+
     }
 }
