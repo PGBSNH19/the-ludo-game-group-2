@@ -8,9 +8,6 @@ namespace GameEngine.Library.Models
     public class PawnMove
     {
         private Pawn pawn;
-
-        //public int Moves { get; set; }
-        //public int PawnID { get; set; }
         public Pawn Pawn { get => pawn; set => pawn = value; }
 
         public PawnMove(Pawn pawn)
