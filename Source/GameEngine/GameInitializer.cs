@@ -30,7 +30,7 @@ namespace GameEngine.Library
 
         public User PlayerByID(int playerID)
         {
-            return users.Where(u => u.UserID == playerID).FirstOrDefault();
+            return users.Where(u => u.PlayerID == playerID).FirstOrDefault();
         }
 
         public List<Pawn> CreateListOfPawns(string color)

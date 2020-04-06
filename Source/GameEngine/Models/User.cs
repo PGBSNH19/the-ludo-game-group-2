@@ -13,31 +13,10 @@ namespace GameEngine.Library.Models
         public List<Pawn> NonActivePawns = new List<Pawn>();
         public int UserScore { get; set; }
 
-<<<<<<< Updated upstream
-        private User(string name, int numberOfPlayers)
-=======
         public User( string name, int idOfPlayer, List<Pawn> pawns)
->>>>>>> Stashed changes
         {
-            PlayerID = numberOfPlayers;
+            PlayerID = idOfPlayer;
             Name = name;
-<<<<<<< Updated upstream
-            Pawns = Pawn.GetSetOfPawns();
-            UserScore = 0;
-        }
-
-        public static List<User> CreateListOfPlayers(int numberOfPlayers)
-        {
-            var players = new List<User>();
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                Console.Write("Name: ");
-                players.Add(new User(Console.ReadLine(), i+1));
-            }
-
-            return players;
-        }
-=======
             Pawns = pawns;
             UserScore = 0;
         }
@@ -48,6 +27,5 @@ namespace GameEngine.Library.Models
         }
 
 
->>>>>>> Stashed changes
     }
 }

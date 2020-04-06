@@ -48,11 +48,7 @@ namespace ConsoleGUI
             Console.ReadKey();
         }
 
-<<<<<<< Updated upstream
-        public static int TimeToChoosePawn(User user)
-=======
-        public int TimeToChoosePawn(User user, GameMotor gameMotor)
->>>>>>> Stashed changes
+        public int TimeToChoosePawn(User user)
         {
             Console.Clear();
             foreach (var pawn in user.Pawns)
