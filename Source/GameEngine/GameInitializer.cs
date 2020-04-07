@@ -26,7 +26,7 @@ namespace GameEngine.Library
 
         public User PlayerByID(int playerID)
         {
-            return Users.Where(u => u.UserID == playerID).FirstOrDefault();
+            return Users.Where(u => u.PlayerID == playerID).FirstOrDefault();
         }
 
         public List<Pawn> CreateListOfPawns(string color)

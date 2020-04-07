@@ -14,7 +14,7 @@ namespace GameEngine.Library
         {
             if (pawn.Count == 56)
             {
-                Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
+                Console.WriteLine($"You reached the finishline with your {pawn.PawnNumber} pawn");
                 pawn.HasReachedGoal = true;
                 return false;
             }

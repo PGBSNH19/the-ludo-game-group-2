@@ -37,7 +37,7 @@ namespace ConsoleGUI
         public void ShowWhichPlayer(User user)
         {
             Console.Clear();
-            Console.WriteLine($"Player ID: {user.UserID} Name: {user.Name}");
+            Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
             Console.WriteLine("Enter key...");
             Console.ReadKey();
         }
@@ -56,7 +56,7 @@ namespace ConsoleGUI
             var pawnsLeft = user.Pawns.Where(p=> p.HasReachedGoal == false).ToList();
             foreach (var pawn in pawnsLeft)
             {
-                Console.WriteLine($"Pawn: {pawn.PawnID}");
+                Console.WriteLine($"Pawn: {pawn.PawnNumber}");
             }
             Console.Write("Enter pawn to move: =>");
             return Convert.ToInt32(Console.ReadLine());

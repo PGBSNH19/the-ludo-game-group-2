@@ -1,8 +1,7 @@
 ﻿using GameEngine.Library;
 using GameEngine.Library.Models;
 using System;
-using System.Linq;
-using System.Threading;
+using GameEngine.Library.Context;
 
 namespace ConsoleGUI
 {
@@ -10,6 +9,8 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
+            using var context = new LudoGameContext();
+
             #region Creates an instance of RunGUI,GameInitializer and GameMotor
             var gUI = new RunGUI();
             var gameInitializer = new GameInitializer();
@@ -33,29 +34,48 @@ namespace ConsoleGUI
             bool gameHasEnd = false;
             while (gameHasEnd == false)
             {
-                for (int i = 0; i < gameInitializer.Users.Count; i++)
+                Console.WriteLine("Do you want to quit and save your game for later? y/n");
+                var answer = Console.ReadLine();
+                if (answer == "y")
                 {
-                    // Get correct player
-                    var player = gameInitializer.PlayerByID(i + 1);
-                    gUI.ShowWhichPlayer(player);
-                    
-                    //roll the dice
-                    gameMotor.RollDie(die);
-                    gUI.ShowDie(die.Roll);
+                    foreach (var player in gameInitializer.Users)
+                    {
+                        context.Users.Add(player);
+                        context.SaveChanges();
+                        foreach (var paw in player.Pawns)
+                        {
+                            paw.UserID = player.UserID;
+                            context.Pawns.Add(paw);
+                            context.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < gameInitializer.Users.Count; i++)
+                    {
+                        // Get correct player
+                        var player = gameInitializer.PlayerByID(i + 1);
+                        gUI.ShowWhichPlayer(player);
 
-                    // Show a Menu of pawns => return choosen if not NULL
-                    var IDOnPawn = gUI.TimeToChoosePawn(player); // Crashes when entering pawnID that no longer exist. 
-                    var pawn = player.PawnByID(IDOnPawn); // This happened after seperating GUI from the logic
+                        //roll the dice
+                        gameMotor.RollDie(die);
+                        gUI.ShowDie(die.Roll);
 
-                    // Time to move pawn, 
-                    //Move Pawn, return landing square
-                    gameInitializer.IfNotStartedSetStartPosition(pawn);
-                    var landingSquare = gameMotor.Move(pawn, die.Roll);
-                    gUI.WalkWithPawn(pawn, die.Roll);
+                        // Show a Menu of pawns => return choosen if not NULL
+                        var IDOnPawn = gUI.TimeToChoosePawn(player); // Crashes when entering pawnID that no longer exist. 
+                        var pawn = player.PawnByID(IDOnPawn); // This happened after seperating GUI from the logic
 
-                    // If pawn position is higher than 56, change bool to hasReachedGoal == true;
-                    gameHasEnd = gameMotor.CheckIfReachedGoal(player, pawn);
-                    gameMotor.OccupySquare(gameBoard,landingSquare);
+                        // Time to move pawn, 
+                        //Move Pawn, return landing square
+                        gameInitializer.IfNotStartedSetStartPosition(pawn);
+                        var landingSquare = gameMotor.Move(pawn, die.Roll);
+                        gUI.WalkWithPawn(pawn, die.Roll);
+
+                        // If pawn position is higher than 56, change bool to hasReachedGoal == true;
+                        gameHasEnd = gameMotor.CheckIfReachedGoal(player, pawn);
+                        gameMotor.OccupySquare(gameBoard, landingSquare);
+                    }
                 }
             }
         }

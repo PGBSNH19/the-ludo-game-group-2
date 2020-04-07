@@ -8,17 +8,21 @@ namespace GameEngine.Library.Models
     public class Pawn
     {
         public int PawnID { get; set; }
+        public int PawnNumber { get; set; }
         public int Position { get; set; }
         public string Color { get; set; }
         public bool HasStarted { get; set; }
         public int Count { get; set; }
         public bool HasReachedGoal { get; set; }
-        public Pawn(int PawnID, int Position, string Color)
+        public User User { get; set; }
+        public int UserID { get; set; }
+
+        public Pawn(int PawnNumber, int Position, string Color)
         {
-            this.PawnID = PawnID;
+            this.PawnNumber = PawnNumber;
             this.Position = Position;
             this.Color = Color;
             this.HasReachedGoal = false;
-        }             
+        }
     }
 }
