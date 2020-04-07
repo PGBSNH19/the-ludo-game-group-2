@@ -2,6 +2,8 @@
 using GameEngine.Library.Models;
 using System;
 using GameEngine.Library.Context;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsoleGUI
 {
@@ -11,23 +13,49 @@ namespace ConsoleGUI
         {
             using var context = new LudoGameContext();
 
-            #region Creates an instance of RunGUI,GameInitializer and GameMotor
+            var loadSavedGame = false;
             var gUI = new RunGUI();
             var gameInitializer = new GameInitializer();
             var gameMotor = new GameMotor();
-            #endregion
-            var numberOfPlayers = gUI.NumberOfPlayers();
-            #region Gets name on each player and pawncolor of choice and then add them to GameInitializers list of users
-            for (int i = 1; i <= numberOfPlayers; i++)
+
+            Console.WriteLine("Do you want to load a saved game? y/n");
+            var answer = Console.ReadLine();
+
+            if (answer == "y")
             {
-                string name = gUI.GetAndReturnName();
-                gUI.ShowPawnColorMenu();
-                var colorOnPawn = gameInitializer.TranslateChoiceToColor(Console.ReadLine());
-                var pawns = gameInitializer.CreateListOfPawns(colorOnPawn);
-                gameInitializer.AddUserToPlayerList(new User(name, i, pawns));
+                var gameNames = context.Users
+                    .Select(x => x.GameName)
+                    .Distinct().ToList();
+
+                foreach (var game in gameNames)
+                {
+                    Console.WriteLine($"Saved Game: { game }");
+                }
+
+                var userGameToLoad = Console.ReadLine();
+                loadSavedGame = true;
+                gameInitializer.Users = context.Users.Where(u => u.GameName == userGameToLoad).ToList();
+                foreach (var user in gameInitializer.Users)
+                {
+                    user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
+                }
             }
-            #endregion
-           
+            else
+            {
+                var numberOfPlayers = gUI.NumberOfPlayers();
+                Console.Write("Name your game: ");
+                var gameName = Console.ReadLine();
+                for (int i = 1; i <= numberOfPlayers; i++)
+                {
+                    string name = gUI.GetAndReturnName();
+                    gUI.ShowPawnColorMenu();
+                    var colorOnPawn = gameInitializer.TranslateChoiceToColor(Console.ReadLine());
+                    var pawns = gameInitializer.CreateListOfPawns(colorOnPawn);
+                    gameInitializer.AddUserToPlayerList(new User(name, i, pawns, gameName));
+                }
+            }
+
+            var playerList = gameInitializer.Users;
             var die = gameInitializer.Die;
             gameInitializer.GameBoard.PopulateBoard();
             var gameBoard = gameInitializer.GameBoard;
@@ -35,18 +63,29 @@ namespace ConsoleGUI
             while (gameHasEnd == false)
             {
                 Console.WriteLine("Do you want to quit and save your game for later? y/n");
-                var answer = Console.ReadLine();
+                answer = Console.ReadLine();
                 if (answer == "y")
                 {
-                    foreach (var player in gameInitializer.Users)
+                    if (loadSavedGame == true)
                     {
-                        context.Users.Add(player);
-                        context.SaveChanges();
-                        foreach (var paw in player.Pawns)
+                        foreach (var player in playerList)
                         {
-                            paw.UserID = player.UserID;
-                            context.Pawns.Add(paw);
+                            context.Entry(player).State = EntityState.Modified;
                             context.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var player in gameInitializer.Users)
+                        {
+                            context.Users.Add(player);
+                            context.SaveChanges();
+                            foreach (var paw in player.Pawns)
+                            {
+                                paw.UserID = player.UserID;
+                                context.Pawns.Add(paw);
+                                context.SaveChanges();
+                            }
                         }
                     }
                 }

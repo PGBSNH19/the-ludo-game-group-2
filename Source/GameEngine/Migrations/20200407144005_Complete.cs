@@ -2,7 +2,7 @@
 
 namespace GameEngine.Library.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Complete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace GameEngine.Library.Migrations
                     UserID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlayerID = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    GameName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

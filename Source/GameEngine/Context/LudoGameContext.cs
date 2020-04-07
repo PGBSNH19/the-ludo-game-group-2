@@ -9,12 +9,6 @@ namespace GameEngine.Library.Context
     {
         public DbSet<Pawn> Pawns { get; set; }
         public DbSet<User> Users { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Pawn>()
-                .HasIndex(p => new { p.PawnNumber, p.Color })
-                .IsUnique(true);
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
