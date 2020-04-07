@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace GameEngine.Library.Models
 {
     public class User
     {
+        [Key]
         public int UserID { get; set; }
+        public int PlayerID { get; set; }
         public string Name { get; set; }
         public List<Pawn> Pawns;
-        public int UserScore { get; set; }
-
-        public User(string name, int idOfPlayer)
+      
+        
+        public User(string name, int PlayerID)
         {
-            UserID = idOfPlayer;
+            this.PlayerID = PlayerID;
             Name = name;
             Pawns = GameInitializer.CreateListOfPawns();
-            UserScore = 0;
+            
         }      
     }
 }

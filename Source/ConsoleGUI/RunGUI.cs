@@ -30,7 +30,7 @@ namespace ConsoleGUI
         public static void ShowWhichPlayer(User user)
         {
             Console.Clear();
-            Console.WriteLine($"Player ID: {user.UserID} Name: {user.Name}");
+            Console.WriteLine($"Player ID: {user.PlayerID} Name: {user.Name}");
             Console.WriteLine("Enter key...");
             Console.ReadKey();
         }
@@ -48,7 +48,7 @@ namespace ConsoleGUI
             Console.Clear();
             foreach (var pawn in gameMotor.CountActivePawns(user))
             {
-                Console.WriteLine($"Pawn: {pawn.PawnID}");
+                Console.WriteLine($"Pawn: {pawn.PawnColorID}");
             }
             Console.Write("Enter pawn to move: =>");
             return Convert.ToInt32(Console.ReadLine());

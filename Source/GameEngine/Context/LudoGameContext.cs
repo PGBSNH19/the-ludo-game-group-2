@@ -8,11 +8,11 @@ using System.Text;
 
 namespace GameEngine.Library.Context
 {
-    class LudoGameContext : DbContext
+    public class LudoGameContext : DbContext
     {
-        public DbSet<Game> Games { get; set; }
+        public DbSet<Pawn> Pawns { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<GameBoard> GameBoard { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,7 +21,13 @@ namespace GameEngine.Library.Context
                   .Build();
             
             optionsBuilder.UseSqlServer(config["ConnectionStrings:DefaultConnection"]);
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pawn>()
+                .HasIndex(p => new { p.PawnColorID, p.Color})
+                .IsUnique(true);
         }
     }
 }

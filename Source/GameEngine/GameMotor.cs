@@ -12,7 +12,7 @@ namespace GameEngine.Library
        
         public Pawn PawnByID(User user, int id)
         {
-            var pawn = user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
+            var pawn = user.Pawns.Where(p => p.PawnColorID == id).FirstOrDefault();
             return pawn;
         }
 
@@ -22,7 +22,7 @@ namespace GameEngine.Library
             {
                 //user.Pawns.Remove(pawn);
                 //user.NonActivePawns.Add(pawn);
-                Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
+                Console.WriteLine($"You reached the finishline with your {pawn.PawnColorID} pawn");
                 pawn.HasReachedGoal = true;
                 finishline = false;
             }

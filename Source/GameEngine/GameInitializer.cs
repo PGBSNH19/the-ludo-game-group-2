@@ -35,7 +35,7 @@ namespace GameEngine.Library
 
         public User PlayerByID(List<User> users, int playerID)
         {
-            return users.Where(u => u.UserID == playerID).FirstOrDefault();
+            return users.Where(u => u.PlayerID == playerID).FirstOrDefault();
         }
 
         public static List<Pawn> CreateListOfPawns()
