@@ -1,35 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace GameEngine.Library.Models
 {
     public class User
     {
+        [Key]
+        public int UserID { get; set; }
         public int PlayerID { get; set; }
         public string Name { get; set; }
-        public List<Pawn> Pawns;
-        public List<Pawn> NonActivePawns = new List<Pawn>();
-        public int UserScore { get; set; }
+        public string GameName { get; set; }
 
-        private User(string name, int numberOfPlayers)
+        public List<Pawn> Pawns;
+        
+        public User()
         {
-            PlayerID = numberOfPlayers;
-            Name = name;
-            Pawns = Pawn.GetSetOfPawns();
-            UserScore = 0;
+
         }
 
-        public static List<User> CreateListOfPlayers(int numberOfPlayers)
+        public User(string name, int PlayerID, List<Pawn> Pawns, string GameName)
         {
-            var players = new List<User>();
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                Console.Write("Name: ");
-                players.Add(new User(Console.ReadLine(), i+1));
-            }
+            this.PlayerID = PlayerID;
+            Name = name;
+            this.Pawns = Pawns;
+            this.GameName = GameName;
+        }
 
-            return players;
+        public Pawn PawnByID(int id)
+        {
+            return Pawns.Where(p => p.PawnNumber == id).FirstOrDefault();
         }
     }
 }
