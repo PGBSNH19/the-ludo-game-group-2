@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace ConsoleGUI
 {
-    public static class RunGUI
+    public class RunGUI
     {
-        public static int NumberOfPlayers()
+        public int NumberOfPlayers()
         {
             Console.Clear();
             Console.Write($"Number of players: ");
@@ -18,17 +18,23 @@ namespace ConsoleGUI
             return amount;
         }
 
-        public static int GetNames(int numberOfPlayers) // Not sure how to fix this GUI with logic
+        public string GetAndReturnName() // Not sure how to fix this GUI with logic
         {
             Console.WriteLine("Enter Name:");
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-
-            }
-            return 0;
+            return Console.ReadLine();
         }
 
-        public static void ShowWhichPlayer(User user)
+        public void ShowPawnColorMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine($"1. Blue");
+            Console.WriteLine($"2. Green");
+            Console.WriteLine($"3. Red");
+            Console.WriteLine($"4. Yellow");
+            Console.WriteLine();
+        }
+
+        public void ShowWhichPlayer(User user)
         {
             Console.Clear();
             Console.WriteLine($"Player ID: {user.UserID} Name: {user.Name}");
@@ -36,7 +42,7 @@ namespace ConsoleGUI
             Console.ReadKey();
         }
 
-        public static void ShowDie(int rollResult)
+        public void ShowDie(int rollResult)
         {
             Console.Clear();
             Console.WriteLine($"Lets roll the dice! Result: {rollResult}");
@@ -44,7 +50,7 @@ namespace ConsoleGUI
             Console.ReadKey();
         }
 
-        public static int TimeToChoosePawn(User user, GameMotor gameMotor)
+        public int TimeToChoosePawn(User user)
         {
             Console.Clear();
             var pawnsLeft = user.Pawns.Where(p=> p.HasReachedGoal == false).ToList();
@@ -56,7 +62,7 @@ namespace ConsoleGUI
             return Convert.ToInt32(Console.ReadLine());
         }
 
-        public static void WalkWithPawn(Pawn pawn,int dieResult)
+        public void WalkWithPawn(Pawn pawn,int dieResult)
         {
             Console.Clear();
             var start = (pawn.Count - dieResult)+ 1;

@@ -14,6 +14,15 @@ namespace GameEngine.Library.Models
         public GameBoard()
         {
             Squares = squares;
-        }      
+        }
+
+        public void PopulateBoard()
+        {
+            squares = new List<Square>();
+            for (int i = 1; i <= 57; i++)
+            {
+                squares.Add(new Square(i));
+            }
+        }
     }
 }

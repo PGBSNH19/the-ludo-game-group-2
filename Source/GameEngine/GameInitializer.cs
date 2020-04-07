@@ -8,9 +8,7 @@ namespace GameEngine.Library
 {
     public class GameInitializer
     {
-        //private List<User> users;
-
-        private List<User> Users { get; set; }
+        public List<User> Users { get; set; }
         public Die Die { get; set; }
         public GameBoard GameBoard { get; set; }
         
@@ -20,29 +18,20 @@ namespace GameEngine.Library
             Die = new Die();
             GameBoard = new GameBoard();
         }
-
-        public List<User> CreateListOfPlayers(int numberOfPlayers)
+        public void AddUserToPlayerList(User user)
         {
-            var players = new List<User>();
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                Console.Write("Name: ");
-                players.Add(new User(Console.ReadLine(), i + 1));
-            }
-
-            return players;
+            Users.Add(user);
         }
 
-        public User PlayerByID(List<User> users, int playerID)
+
+        public User PlayerByID(int playerID)
         {
-            return users.Where(u => u.UserID == playerID).FirstOrDefault();
+            return Users.Where(u => u.UserID == playerID).FirstOrDefault();
         }
 
-        public static List<Pawn> CreateListOfPawns()
+        public List<Pawn> CreateListOfPawns(string color)
         {
-            ShowPawnColorMenu();
 
-            var color = TranslateChoiceToColor(Console.ReadLine());
             List<Pawn> pawns = new List<Pawn>();
             for (int i = 1; i <= 4; i++)
             {
@@ -62,7 +51,7 @@ namespace GameEngine.Library
             Console.WriteLine();
         }
 
-        private static string TranslateChoiceToColor(string userChoice)
+        public string TranslateChoiceToColor(string userChoice)
         {
             return userChoice switch
             {

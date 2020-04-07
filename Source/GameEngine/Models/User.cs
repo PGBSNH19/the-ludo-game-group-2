@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameEngine.Library.Models
@@ -11,11 +12,11 @@ namespace GameEngine.Library.Models
         public List<Pawn> Pawns;
         public int UserScore { get; set; }
 
-        public User(string name, int idOfPlayer)
+        public User(string name, int idOfPlayer, List<Pawn> pawns)
         {
             UserID = idOfPlayer;
             Name = name;
-            Pawns = GameInitializer.CreateListOfPawns();
+            Pawns = pawns;
             UserScore = 0;
         }
 
