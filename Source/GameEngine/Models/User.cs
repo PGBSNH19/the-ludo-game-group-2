@@ -14,11 +14,12 @@ namespace GameEngine.Library.Models
         public List<Pawn> Pawns;
       
         
-        public User(string name, int PlayerID)
+        public User(string name, int PlayerID, List<Pawn> pawns)
         {
             this.PlayerID = PlayerID;
             Name = name;
-            Pawns = GameInitializer.CreateListOfPawns();
+            //  Pawns = GameInitializer.CreateListOfPawns();
+            Pawns = pawns;
             
         }      
     }
