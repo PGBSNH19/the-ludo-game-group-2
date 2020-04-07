@@ -17,6 +17,11 @@ namespace GameEngine.Library.Models
             Name = name;
             Pawns = GameInitializer.CreateListOfPawns();
             UserScore = 0;
-        }      
+        }
+
+        public Pawn PawnByID(int id)
+        {
+            return Pawns.Where(p => p.PawnID == id).FirstOrDefault();
+        }
     }
 }

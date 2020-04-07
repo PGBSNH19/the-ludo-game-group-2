@@ -9,30 +9,22 @@ namespace GameEngine.Library
     public class GameMotor
     {
         public GameInitializer GameInitializer { get; set; }
-       
-        public Pawn PawnByID(User user, int id)
-        {
-            var pawn = user.Pawns.Where(p => p.PawnID == id).FirstOrDefault();
-            return pawn;
-        }
 
-        public bool CheckIfReachedGoal(User user, Pawn pawn, bool finishline)
+        public bool CheckIfReachedGoal(User user, Pawn pawn)
         {
             if (pawn.Count == 56)
             {
-                //user.Pawns.Remove(pawn);
-                //user.NonActivePawns.Add(pawn);
                 Console.WriteLine($"You reached the finishline with your {pawn.PawnID} pawn");
                 pawn.HasReachedGoal = true;
-                finishline = false;
+                return false;
             }
 
             if (CountActivePawns(user).Count == 0)
             {
                 Console.WriteLine("Congrats you won!");
-                finishline = true;
+                return true;
             }
-            return finishline;
+            return false;
         }
 
         public List<Pawn> CountActivePawns(User user)
@@ -40,24 +32,12 @@ namespace GameEngine.Library
             return user.Pawns.Where(p => p.HasReachedGoal == false).ToList();
         }
 
-        public Pawn GetPawnByID(User user, int pawnID)
-        {
-            while (true)
-            {
-                var pawn = PawnByID(user, pawnID);
-                if (pawn != null)
-                {
-                    return pawn;
-                }
-            }
-        }
 
-        public Die RollDie(Die die)
+
+        public void RollDie(Die die)
         {
             Random rnd = new Random();
             die.Roll = rnd.Next(1, 7);
-
-            return die;
         }
 
         public int Move(Pawn pawn, int dieRoll)
@@ -84,15 +64,13 @@ namespace GameEngine.Library
             }
         }
 
-        public void OccupySquare(List<Square> gameBoard, int endSquare)
+        public void OccupySquare(GameBoard gameBoard, int endSquare)
         {
-            var square = gameBoard.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
-
             if (endSquare > 56)
             {
                 return;
             }
-            square.IsEmpty = false;
+            gameBoard.Squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault().IsEmpty = false;
         }
     }
 }

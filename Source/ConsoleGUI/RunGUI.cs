@@ -2,6 +2,7 @@
 using GameEngine.Library;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -46,7 +47,8 @@ namespace ConsoleGUI
         public static int TimeToChoosePawn(User user, GameMotor gameMotor)
         {
             Console.Clear();
-            foreach (var pawn in gameMotor.CountActivePawns(user))
+            var pawnsLeft = user.Pawns.Where(p=> p.HasReachedGoal == false).ToList();
+            foreach (var pawn in pawnsLeft)
             {
                 Console.WriteLine($"Pawn: {pawn.PawnID}");
             }
