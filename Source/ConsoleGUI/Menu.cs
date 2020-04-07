@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ConsoleGUI
 {
-    public class Menu
+    public static class Menu
     {
-        public int HowManyPlayers()
+        public static int HowManyPlayers()
         {
             Console.WriteLine($"Number of players:");
             var amount = int.Parse(Console.ReadLine());

@@ -7,27 +7,22 @@ namespace GameEngine.Library.Models
 {
     public class GameBoard
     {
-        public List<Square> Squares { get; set; }
+        private List<Square> squares;
+
+        public List<Square> Squares { get => squares; set => squares = value; }
 
         public GameBoard()
         {
-            Squares = PopulateBoard();
+            Squares = squares;
         }
 
-        public static List<Square> PopulateBoard()
+        public void PopulateBoard()
         {
-            var list = new List<Square>();
+            squares = new List<Square>();
             for (int i = 1; i <= 57; i++)
             {
-                list.Add(new Square(i));
+                squares.Add(new Square(i));
             }
-            return list;
-        }
-
-        public void OccupySquare(GameBoard gameBoard, int endSquare)
-        {
-            var square = gameBoard.Squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
-            square.IsEmpty = false;
         }
     }
 }

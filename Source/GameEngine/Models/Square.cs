@@ -8,8 +8,8 @@ namespace GameEngine.Library.Models
     public class Square
     {
         public int SquareID { get; set; }
-        public int SquareNumber { get; set; }
         public int GameBoardID { get; set; }
+        public int SquareNumber { get; set; }
         public bool IsEmpty { get; set; }
 
         public Square(int number)
@@ -17,7 +17,5 @@ namespace GameEngine.Library.Models
             SquareNumber = number;
             IsEmpty = true;
         }
-
-        
     }
 }
