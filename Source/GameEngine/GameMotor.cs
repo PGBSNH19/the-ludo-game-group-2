@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GameEngine.Library
 {
     public class GameMotor
     {
-        public GameInitializer GameInitializer { get; set; }
-
         public bool CheckIfReachedGoal(User user, Pawn pawn)
         {
             if (pawn.Count == 56)

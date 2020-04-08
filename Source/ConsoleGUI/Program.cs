@@ -18,8 +18,7 @@ namespace ConsoleGUI
             var gameInitializer = new GameInitializer();
             var gameMotor = new GameMotor();
 
-            Console.WriteLine("Do you want to load a saved game? y/n");
-            var answer = Console.ReadLine();
+            var answer = Menu.DisplayMessageReturnUserInput("Do you want to load a saved game? y/n");
 
             if (answer == "y")
             {
@@ -43,8 +42,7 @@ namespace ConsoleGUI
             else
             {
                 var numberOfPlayers = gUI.NumberOfPlayers();
-                Console.Write("Name your game: ");
-                var gameName = Console.ReadLine();
+                var gameName = Menu.DisplayMessageReturnUserInput("Name your game: ");
                 for (int i = 1; i <= numberOfPlayers; i++)
                 {
                     string name = gUI.GetAndReturnName();
@@ -62,8 +60,7 @@ namespace ConsoleGUI
             bool gameHasEnd = false;
             while (gameHasEnd == false)
             {
-                Console.WriteLine("Do you want to quit and save your game for later? y/n");
-                answer = Console.ReadLine();
+                answer = Menu.DisplayMessageReturnUserInput("Do you want to quit and save your game for later? y/n");
                 if (answer == "y")
                 {
                     if (loadSavedGame == true)
