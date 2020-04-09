@@ -32,8 +32,6 @@ namespace GameEngine.Library
             return user.Pawns.Where(p => p.HasReachedGoal == false).ToList();
         }
 
-
-
         public void RollDie(Die die)
         {
             Random rnd = new Random();

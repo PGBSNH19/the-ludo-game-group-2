@@ -2,7 +2,7 @@
 
 namespace GameEngine.Library.Migrations
 {
-    public partial class Complete : Migration
+    public partial class something : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,13 +50,6 @@ namespace GameEngine.Library.Migrations
                 name: "IX_Pawns_UserID",
                 table: "Pawns",
                 column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pawns_PawnNumber_Color",
-                table: "Pawns",
-                columns: new[] { "PawnNumber", "Color" },
-                unique: true,
-                filter: "[Color] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

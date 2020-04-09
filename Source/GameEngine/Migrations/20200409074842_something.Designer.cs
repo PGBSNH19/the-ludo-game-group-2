@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameEngine.Library.Migrations
 {
     [DbContext(typeof(LudoGameContext))]
-    [Migration("20200407144605_CompleteNot")]
-    partial class CompleteNot
+    [Migration("20200409074842_something")]
+    partial class something
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

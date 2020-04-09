@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameEngine.Library.Migrations
 {
     [DbContext(typeof(LudoGameContext))]
-    [Migration("20200407144005_Complete")]
-    partial class Complete
+    [Migration("20200409074931_DeletedProperty")]
+    partial class DeletedProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace GameEngine.Library.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Color")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -51,10 +51,6 @@ namespace GameEngine.Library.Migrations
                     b.HasKey("PawnID");
 
                     b.HasIndex("UserID");
-
-                    b.HasIndex("PawnNumber", "Color")
-                        .IsUnique()
-                        .HasFilter("[Color] IS NOT NULL");
 
                     b.ToTable("Pawns");
                 });

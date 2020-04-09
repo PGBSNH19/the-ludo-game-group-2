@@ -18,11 +18,11 @@ namespace GameEngine.Library
             Die = new Die();
             GameBoard = new GameBoard();
         }
+        
         public void AddUserToPlayerList(User user)
         {
             Users.Add(user);
         }
-
 
         public User PlayerByID(int playerID)
         {
@@ -63,7 +63,7 @@ namespace GameEngine.Library
             };
         }
 
-        public static void SetStartPosition(Pawn pawn)
+        public void SetStartPosition(Pawn pawn)
         {
             pawn.Position = pawn.Color switch
             {
