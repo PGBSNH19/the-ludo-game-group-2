@@ -13,34 +13,16 @@ namespace GameEngine.Library.Models
 
         public GameBoard()
         {
-            Squares = PopulateBoard();
+            Squares = squares;
         }
 
-        public List<Square> PopulateBoard()
+        public void PopulateBoard()
         {
             squares = new List<Square>();
             for (int i = 1; i <= 57; i++)
             {
                 squares.Add(new Square(i));
             }
-            return squares;
-        }
-
-        // Maybe move to game? 
-        public void OccupySquare(/*GameBoard gameBoard,*/ int endSquare)
-        {
-            var square = squares.Where(sq => sq.SquareNumber == endSquare).FirstOrDefault();
-
-            if (endSquare > 56)
-            {
-                return;
-            }
-            square.IsEmpty = false;
-            //Console.WriteLine($"Squarenumber {square.SquareNumber} is set to empty: {square.IsEmpty}");
-            //Console.WriteLine();
-            //Console.WriteLine();
-            //Console.WriteLine("--------------------------------------------------------------------------------------------");
-
         }
     }
 }
