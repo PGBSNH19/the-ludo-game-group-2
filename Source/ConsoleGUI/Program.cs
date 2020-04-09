@@ -25,42 +25,6 @@ namespace ConsoleGUI
             LoadSavedGameOrCreateNewGame(context, ref loadSavedGame, gUI, game, ref loadGameAnswer, ref validChoice);
             Console.Clear();
 
-
-            #region You want to load saved game?
-            //if (loadGameAnswer == "y")
-            //{
-            //    var gameNames = context.Users
-            //        .Select(x => x.GameName)
-            //        .Distinct().ToList();
-
-            //    foreach (var gameName in gameNames)
-            //    {
-            //        Console.WriteLine($"Saved Game: { gameName }");
-            //    }
-            //    var userGameToLoad = Console.ReadLine();
-            //    game.Users = context.Users.Where(u => u.GameName == userGameToLoad).ToList();
-
-            //    foreach (var user in game.Users)
-            //    {
-            //        user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
-            //    }
-
-            //    loadSavedGame = true;
-            //}
-            //else
-            //{
-            //    var numberOfPlayers = gUI.NumberOfPlayers();
-            //    var gameName = Menu.DisplayMessageReturnUserInput("Name your game: ");
-            //    for (int i = 1; i <= numberOfPlayers; i++)
-            //    {
-            //        string name = gUI.GetAndReturnName();
-            //        gUI.ShowPawnColorMenu();
-            //        var colorOnPawn = game.TranslateChoiceToColor(Console.ReadLine());
-            //        var pawns = game.CreateListOfPawns(colorOnPawn);
-            //        game.AddUserToPlayerList(new User(name, i, pawns, gameName));
-            //    }
-            //}
-            #endregion
             bool gameHasEnd = false;
             while (gameHasEnd == false)
             {
@@ -71,34 +35,6 @@ namespace ConsoleGUI
                 bool validChoiceInGame = false;
                 ContinueOrExit(context, loadSavedGame, game, ref exitGameAnswer, ref validChoiceInGame);
                 Console.Clear();
-
-                #region Do you want to quit and save your game
-                //if (exitGameAnswer == "y")
-                //{
-                //    if (loadSavedGame == true)
-                //    {
-                //        foreach (var user in game.Users)
-                //        {
-                //            context.Entry(user).State = EntityState.Modified;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        foreach (var user in game.Users)
-                //        {
-                //            context.Users.Add(user);
-                //            context.SaveChanges();
-                //            foreach (var paw in user.Pawns)
-                //            {
-                //                paw.UserID = user.UserID;
-                //                context.Pawns.Add(paw);
-                //            }
-                //        }
-                //    }
-                //    context.SaveChanges();
-                //    Environment.Exit(0);
-                //}
-                #endregion
             }
         }
 
@@ -175,6 +111,7 @@ namespace ConsoleGUI
                         {
                             user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
                         }
+
 
                         loadSavedGame = true;
                         validChoice = true;
