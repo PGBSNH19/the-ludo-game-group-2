@@ -11,109 +11,218 @@ namespace ConsoleGUI
     {
         static void Main(string[] args)
         {
+            #region Initilize Classes
             using var context = new LudoGameContext();
 
             var loadSavedGame = false;
             var gUI = new RunGUI();
-            var gameInitializer = new GameInitializer();
+            var game = new GameInitializer();
             var gameMotor = new GameMotor();
+            game.GameBoard.PopulateBoard();
+            #endregion
+            var loadGameAnswer = "";
+            bool validChoice = false;
+            LoadSavedGameOrCreateNewGame(context, ref loadSavedGame, gUI, game, ref loadGameAnswer, ref validChoice);
+            Console.Clear();
 
-            var answer = Menu.DisplayMessageReturnUserInput("Do you want to load a saved game? y/n");
 
-            if (answer == "y")
-            {
-                var gameNames = context.Users
-                    .Select(x => x.GameName)
-                    .Distinct().ToList();
+            #region You want to load saved game?
+            //if (loadGameAnswer == "y")
+            //{
+            //    var gameNames = context.Users
+            //        .Select(x => x.GameName)
+            //        .Distinct().ToList();
 
-                foreach (var game in gameNames)
-                {
-                    Console.WriteLine($"Saved Game: { game }");
-                }
+            //    foreach (var gameName in gameNames)
+            //    {
+            //        Console.WriteLine($"Saved Game: { gameName }");
+            //    }
+            //    var userGameToLoad = Console.ReadLine();
+            //    game.Users = context.Users.Where(u => u.GameName == userGameToLoad).ToList();
 
-                var userGameToLoad = Console.ReadLine();
-                loadSavedGame = true;
-                gameInitializer.Users = context.Users.Where(u => u.GameName == userGameToLoad).ToList();
-                foreach (var user in gameInitializer.Users)
-                {
-                    user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
-                }
-            }
-            else
-            {
-                var numberOfPlayers = gUI.NumberOfPlayers();
-                var gameName = Menu.DisplayMessageReturnUserInput("Name your game: ");
-                for (int i = 1; i <= numberOfPlayers; i++)
-                {
-                    string name = gUI.GetAndReturnName();
-                    gUI.ShowPawnColorMenu();
-                    var colorOnPawn = gameInitializer.TranslateChoiceToColor(Console.ReadLine());
-                    var pawns = gameInitializer.CreateListOfPawns(colorOnPawn);
-                    gameInitializer.AddUserToPlayerList(new User(name, i, pawns, gameName));
-                }
-            }
+            //    foreach (var user in game.Users)
+            //    {
+            //        user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
+            //    }
 
-            var playerList = gameInitializer.Users;
-            var die = gameInitializer.Die;
-            gameInitializer.GameBoard.PopulateBoard();
-            var gameBoard = gameInitializer.GameBoard;
+            //    loadSavedGame = true;
+            //}
+            //else
+            //{
+            //    var numberOfPlayers = gUI.NumberOfPlayers();
+            //    var gameName = Menu.DisplayMessageReturnUserInput("Name your game: ");
+            //    for (int i = 1; i <= numberOfPlayers; i++)
+            //    {
+            //        string name = gUI.GetAndReturnName();
+            //        gUI.ShowPawnColorMenu();
+            //        var colorOnPawn = game.TranslateChoiceToColor(Console.ReadLine());
+            //        var pawns = game.CreateListOfPawns(colorOnPawn);
+            //        game.AddUserToPlayerList(new User(name, i, pawns, gameName));
+            //    }
+            //}
+            #endregion
             bool gameHasEnd = false;
             while (gameHasEnd == false)
             {
-                answer = Menu.DisplayMessageReturnUserInput("Do you want to quit and save your game for later? y/n");
-                if (answer == "y")
+                gameHasEnd = PlayerTurn(gUI, game, gameMotor, gameHasEnd);
+                Console.Clear();
+
+                var exitGameAnswer = "";
+                bool validChoiceInGame = false;
+                ContinueOrExit(context, loadSavedGame, game, ref exitGameAnswer, ref validChoiceInGame);
+                Console.Clear();
+
+                #region Do you want to quit and save your game
+                //if (exitGameAnswer == "y")
+                //{
+                //    if (loadSavedGame == true)
+                //    {
+                //        foreach (var user in game.Users)
+                //        {
+                //            context.Entry(user).State = EntityState.Modified;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        foreach (var user in game.Users)
+                //        {
+                //            context.Users.Add(user);
+                //            context.SaveChanges();
+                //            foreach (var paw in user.Pawns)
+                //            {
+                //                paw.UserID = user.UserID;
+                //                context.Pawns.Add(paw);
+                //            }
+                //        }
+                //    }
+                //    context.SaveChanges();
+                //    Environment.Exit(0);
+                //}
+                #endregion
+            }
+        }
+
+        private static void ContinueOrExit(LudoGameContext context, bool loadSavedGame, GameInitializer game, ref string exitGameAnswer, ref bool validChoiceInGame)
+        {
+            while (validChoiceInGame == false)
+            {
+                exitGameAnswer = Menu.DisplayMessageReturnUserInput("y. = Quit & Save Game\n" +
+                                                                    "n. = Continue playing\n" +
+                                                                    "q. = Quit without saving");
+                switch (exitGameAnswer)
                 {
-                    if (loadSavedGame == true)
-                    {
-                        foreach (var player in playerList)
+                    case "y":
+                        if (loadSavedGame == true)
                         {
-                            context.Entry(player).State = EntityState.Modified;
-                            context.SaveChanges();
-                        }
-                    }
-                    else
-                    {
-                        foreach (var player in gameInitializer.Users)
-                        {
-                            context.Users.Add(player);
-                            context.SaveChanges();
-                            foreach (var paw in player.Pawns)
+                            foreach (var user in game.Users)
                             {
-                                paw.UserID = player.UserID;
-                                context.Pawns.Add(paw);
-                                context.SaveChanges();
+                                context.Entry(user).State = EntityState.Modified;
                             }
                         }
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < gameInitializer.Users.Count; i++)
-                    {
-                        // Get correct player
-                        var player = gameInitializer.PlayerByID(i + 1);
-                        gUI.ShowWhichPlayer(player);
-
-                        //roll the dice
-                        gameMotor.RollDie(die);
-                        gUI.ShowDie(die.Roll);
-
-                        // Show a Menu of pawns => return choosen if not NULL
-                        var IDOnPawn = gUI.TimeToChoosePawn(player); // Crashes when entering pawnID that no longer exist. 
-                        var pawn = player.PawnByID(IDOnPawn); // This happened after seperating GUI from the logic
-
-                        // Time to move pawn, 
-                        //Move Pawn, return landing square
-                        gameInitializer.IfNotStartedSetStartPosition(pawn);
-                        var landingSquare = gameMotor.Move(pawn, die.Roll);
-                        gUI.WalkWithPawn(pawn, die.Roll);
-
-                        // If pawn position is higher than 56, change bool to hasReachedGoal == true;
-                        gameHasEnd = gameMotor.CheckIfReachedGoal(player, pawn);
-                        gameMotor.OccupySquare(gameBoard, landingSquare);
-                    }
+                        else
+                        {
+                            foreach (var user in game.Users)
+                            {
+                                context.Users.Add(user);
+                                context.SaveChanges();
+                                foreach (var paw in user.Pawns)
+                                {
+                                    paw.UserID = user.UserID;
+                                    context.Pawns.Add(paw);
+                                }
+                            }
+                        }
+                        context.SaveChanges();
+                        Environment.Exit(0);
+                        break;
+                    case "n":
+                        validChoiceInGame = true;
+                        break;
+                    case "q":
+                        Console.WriteLine("Thanks for playing The Ludo Game! :)");
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("No valid input");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
                 }
             }
+        }
+
+        private static void LoadSavedGameOrCreateNewGame(LudoGameContext context, ref bool loadSavedGame, RunGUI gUI, GameInitializer game, ref string loadGameAnswer, ref bool validChoice)
+        {
+            while (validChoice == false)
+            {
+                loadGameAnswer = Menu.DisplayMessageReturnUserInput("y. = Load saved game\n" +
+                                                                    "n. = Create new game");
+                switch (loadGameAnswer)
+                {
+                    case "y":
+                        var gameNames = context.Users
+                        .Select(x => x.GameName)
+                        .Distinct().ToList();
+
+                        foreach (var gameName in gameNames)
+                        {
+                            Console.WriteLine($"Saved Game: { gameName }");
+                        }
+                        var userGameToLoad = Console.ReadLine();
+                        game.Users = context.Users.Where(u => u.GameName == userGameToLoad).ToList();
+
+                        foreach (var user in game.Users)
+                        {
+                            user.Pawns = context.Pawns.Where(p => p.UserID == user.UserID).ToList();
+                        }
+
+                        loadSavedGame = true;
+                        validChoice = true;
+                        break;
+                    case "n":
+                        var numberOfPlayers = gUI.NumberOfPlayers();
+                        var nameOfGame = Menu.DisplayMessageReturnUserInput("Name your game: ");
+                        for (int i = 1; i <= numberOfPlayers; i++)
+                        {
+                            string name = gUI.GetAndReturnName();
+                            gUI.ShowPawnColorMenu();
+                            var colorOnPawn = game.TranslateChoiceToColor(Console.ReadLine());
+                            var pawns = game.CreateListOfPawns(colorOnPawn);
+                            game.AddUserToPlayerList(new User(name, i, pawns, nameOfGame));
+                        }
+                        validChoice = true;
+                        break;
+                    default:
+                        Console.WriteLine("No valid input");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                }
+            }
+        }
+
+        private static bool PlayerTurn(RunGUI gUI, GameInitializer game, GameMotor gameMotor, bool gameHasEnd)
+        {
+            for (int i = 0; i < game.Users.Count; i++)
+            {
+                var player = game.PlayerByID(i + 1);
+                gUI.ShowWhichPlayer(player);
+
+                gameMotor.RollDie(game.Die);
+                gUI.ShowDie(game.Die.Roll);
+
+                var IDOnPawn = gUI.TimeToChoosePawn(player); 
+                var pawn = player.PawnByID(IDOnPawn); 
+
+                game.IfNotStartedSetStartPosition(pawn);
+                var landingSquare = gameMotor.Move(pawn, game.Die.Roll);
+                gUI.WalkWithPawn(pawn, game.Die.Roll);
+
+                gameHasEnd = gameMotor.CheckIfReachedGoal(player, pawn, gameHasEnd);
+                gameMotor.OccupySquare(game.GameBoard, landingSquare);
+            }
+
+            return gameHasEnd;
         }
     }
 }
