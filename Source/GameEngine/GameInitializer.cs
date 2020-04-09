@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GameEngine.Library
 {
@@ -39,16 +38,6 @@ namespace GameEngine.Library
                 pawns.Add(pawn);
             }
             return pawns;
-        }
-
-        private static void ShowPawnColorMenu()
-        {
-            Console.WriteLine();
-            Console.WriteLine($"1. Blue");
-            Console.WriteLine($"2. Green");
-            Console.WriteLine($"3. Red");
-            Console.WriteLine($"4. Yellow");
-            Console.WriteLine();
         }
 
         public string TranslateChoiceToColor(string userChoice)

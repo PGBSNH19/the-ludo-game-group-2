@@ -1,10 +1,6 @@
 ﻿using GameEngine.Library.Models;
-using GameEngine.Library;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace ConsoleGUI
 {
@@ -13,8 +9,7 @@ namespace ConsoleGUI
         public int NumberOfPlayers()
         {
             Console.Clear();
-            Console.Write($"Number of players: ");
-            var amount = int.Parse(Console.ReadLine());
+            var amount = Menu.DisplayMessageReturnInt("Num of players: ");
             return amount;
         }
 
@@ -58,8 +53,7 @@ namespace ConsoleGUI
             {
                 Console.WriteLine($"Pawn: {pawn.PawnNumber}");
             }
-            Console.Write("Enter pawn to move: =>");
-            return Convert.ToInt32(Console.ReadLine());
+            return Menu.DisplayMessageReturnInt("Enter pawn to move: => ");
         }
 
         public void WalkWithPawn(Pawn pawn,int dieResult)

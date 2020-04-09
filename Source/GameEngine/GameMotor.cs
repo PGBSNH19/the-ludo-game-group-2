@@ -2,29 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GameEngine.Library
 {
     public class GameMotor
     {
-        public GameInitializer GameInitializer { get; set; }
-
-        public bool CheckIfReachedGoal(User user, Pawn pawn)
+        public bool CheckIfReachedGoal(User user, Pawn pawn, bool gameHasEnd)
         {
             if (pawn.Count == 56)
             {
                 Console.WriteLine($"You reached the finishline with your {pawn.PawnNumber} pawn");
                 pawn.HasReachedGoal = true;
-                return false;
+                gameHasEnd = false;
+                
             }
 
-            if (CountActivePawns(user).Count == 0)
+            if (CountActivePawns(user).Count <1)
             {
                 Console.WriteLine("Congrats you won!");
-                return true;
+                Console.ReadKey();
+                gameHasEnd = true;
             }
-            return false;
+            return gameHasEnd;
         }
 
         public List<Pawn> CountActivePawns(User user)
