@@ -20,7 +20,6 @@ namespace LudoGame.Tests
         public void TestDieCantRollMoreThanSixAndLessThanOne(int randomNext)
         {
             var dieRoll = new Die() { Roll = randomNext };
-
             int result = dieRoll.Roll;
 
             Assert.InRange(result, 1, 6);
@@ -32,8 +31,7 @@ namespace LudoGame.Tests
         [InlineData("Green", 20)]
         [InlineData("Blue", 30)]
         public void TestColorExpectedStartPosition(string color, int expectedPositionOnBoard)
-        {
-            
+        {           
             var pawn = new Pawn(1, expectedPositionOnBoard, color);
             GameInitializer.SetStartPosition(pawn);
 
@@ -83,7 +81,6 @@ namespace LudoGame.Tests
         [Fact]
         public void TestIfPawnHaStartedIsFalseAndSetValueToTrue()
         {
-
             var gameInitializer = new GameInitializer();
             var pawn = new Pawn(1, 1, "Blue");
             gameInitializer.IfNotStartedSetStartPosition(pawn);
@@ -116,7 +113,6 @@ namespace LudoGame.Tests
 
             var square = new Square(34) { IsEmpty = false };
             listOfSquares.Add(square);
-
 
             gameMotor.OccupySquare(gameBoard, 34);
 
