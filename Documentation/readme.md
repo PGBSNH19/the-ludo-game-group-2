@@ -15,7 +15,7 @@ When "open an existing game" has been chosen:
 •     As a user I want to be able to start where we left
 •     As a user I want to be able to get all the information about the game
 
-# CLASSES (first idea)
+# CLASSES
 
 # Menu
 ## Methods
