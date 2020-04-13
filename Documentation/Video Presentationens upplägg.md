@@ -18,13 +18,14 @@ GameInitializer-klassen
 två tabeller. Tankar kring det. Skulle vi ha haft en Game-tabell också? 
 ### Murre 
 RunGUI-klassen. 
-### Fredrika Especially 
-useful codereview comments , hur såg vi på kommentarerna? var de konstruktiva? Hur jobbade vi utifrån dem?  
+### Fredrika 
+Especially useful codereview comments , hur såg vi på kommentarerna? var de konstruktiva? Hur jobbade vi utifrån dem?  
 ### Murre 
 A description of your process Which tools did you use and for what? How did the team communicate? Did you part up your work in the team? And how? 
 Kommunikation, arbetade vi ihop, på eget håll. Funkade det bra etc
 ### Lessons learnt during the process 
-### Irvin Hade vi planerat ordentligt? Behövde vi göra om? Arbetsfördelning etc
+### Irvin 
+Hade vi planerat ordentligt? Behövde vi göra om? Arbetsfördelning etc
 ### William 
 What would you had done differently? 
 Saker vi kunde lagt till etc, om vi haft mer tid. Vad hade vi kunnat göra annorlunda? 
