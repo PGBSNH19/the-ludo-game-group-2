@@ -18,112 +18,124 @@ When "open an existing game" has been chosen:
 # CLASSES (first idea)
 
 # Menu
-## Properties
 ## Methods
-Logo()
-MenuNumberOfPlayers()
-MenuGetUserName()
-UserTurn()
-StartGame()
-GetSavedGame()
-
-
+### HowManyPlayers()
+### DisplayMessageReturnUserInput()
+### DisplayMessageReturn()
 
 # User
 ## Properties
-Name string
-List<Pawn> Pawns / Pawn[] Pawns
+public int UserID { get; set; }
+public int PlayerID { get; set; }
+public string Name { get; set; }
+public string GameName { get; set; }
+public List<Pawn> Pawns;
+user()
+public User(string name, int PlayerID, List<Pawn> Pawns, string GameName)
+       
 ## Methods
-ICreatePlayer(Name,Pawns[4])
-Som en användare ska jag kunna välja en färg, för att kunna ta del av spelet och flytta fram min pawn.
+PawnByID(int id)
 
 # Pawn 
 ## Properties
-int Position
-string Color
-int SquareID 
-int UserID
+public int PawnID { get; set; }
+public int PawnNumber { get; set; }
+public int Position { get; set; }
+public string Color { get; set; }
+public bool HasStarted { get; set; }
+public int Count { get; set; }
+public bool HasReachedGoal { get; set; }
+public User User { get; set; }
+public int UserID { get; set; }
 
-## Methods
-Pawn(Position,Color,SquareID)
-?MovePawn(int moves)
+Pawn(int PawnNumber, int Position, string Color)
 
-En pawn ska kunna flytta sig fram på brädet för att kunna ta sig vidare i spelet. 
-
-# Dice
+# Die
 ## Properties
-int Roll (1, 2, 3, 4, 5, 6)
-## Methods
-Math.randomINT(1-6)
-
-# MOVE
-## Properties
-int Moves
-int PawnID
-## Methods
-?MovePawn(int moves)
+private int Roll
+Die()
 
 # SQUARE
 
 ## Properties
-int SquareID
-int BoardID
-int PawnID 
-## Methods
-Om det står två stycken Pawns på samma SquareID så ska en Pawn knuffas bort på den ruta som de delar och flyttas tillbaka till sin startposition.
+public int SquareID { get; set; }
+public int GameBoardID { get; set; }
+public int SquareNumber { get; set; }
+public bool IsEmpty { get; set; }
+Square(int number)
 
 # GameBoard
 ## Properties
-int TotalSquares (57?)
+private List<Square> squares;
+public List<Square> Squares { get => squares; set => squares = value; }
+Public GameBoard()
+
 ## Methods
+PopulateBoard()
 
-# Game
-## Properties
-Name
-User[]
-pawn-color 
-ID
-Board
+# RUNGUI
+int NumberOfPlayers()
+string GetAndReturnName()
+ShowPawnColorMenu()
+ShowWhichPlayer(User user)
+ShowDie(int rollResult)
+int TimeToChoosePawn(User user)
+WalkWithPawn(Pawn pawn,int dieResult)
 
-# UserTurn : IUserTurn
-## Properties
-## Methods
-Turn=PlayerRoleDice(Muränan).PlayerMovePawn(PawnRed,intStepToMove)
-Turn=PlayerRoleDice(Fredrika_Awsome).PlayerMovePawn(PawnRed,intStepToMove)
+# GAMEINITIALIZER
+## Properties 
+List<user> Users
+Die Die
+GameBoard GameBoard
+GameInitializer()
+ 
+ ## Methods
+ AddUserToPlayerList(User user)
+ User PlayerByID(int playerID)
+ List<Pawn> CreateListOfPawns(string color)
+ string TranslateChoiceToColor(string userChoice)
+ SetStartPosition(Pawn pawn)
+ IfNotStartedSetStartPosition(Pawn pawn)
+ List<Square> PopulateBoard()
+ 
+ # GAMEMOTOR
+ 
+ ## Methods
+ bool CheckIfReachedGoal(User user, Pawn pawn, bool gameHasEnd)
+ List<Pawn> CountActivePawns(User user)
+ RollDie(Die die)
+ int Move(Pawn pawn, int dieRoll)
+ OccupySquare(GameBoard gameBoard, int endSquare)
 
-# MOCKUP
-PlayerRoleDice(User Muränan){
+## XUNIT-TEST
+[Theory]
+TestDieCantRollMoreThanSixAndLessThanOne(int randomNext)
 
-Roll Dice with Math.Random
-Return this;
-}
+[Theory]
+TestColorExpectedStartPosition(string color, int expectedPositionOnBoard)
 
-PlayerMovePawn(PawnRed[1])
-{
-Vi får ett intresultat av RoleDice (antal steg pawn ska flyttas fram), ex 4.
-Move pawn forwards on the board. (If pawn is currently in SquareID 4 move to 8)
-}
+[Theory]
+TestWhichPlayerRound(int playerID)
 
-# SCENARIOS
-## PUSH 
-Turn=PlayerRoleDice(Fredrika_Awsome).PlayerMovePawn(PawnRed,intStepToMove).PlayerPushPawnInSquare(currentPawn)
-## BETWEEN SQUARE 51-56
-Turn=PlayerRoleDice(Fredrika_Awsome).PlayerMovePawn(PawnRed,intStepToMove)
-## PAWN.POSITION > 57
-If(User.PawnPosition>= 51&& User.PawnPosition < 57)
-Movetowards center
-TotalSquares- PawnPosition
+[Theory]
+TestCreateListOfPawns(string color)
 
-## LAST PAWN.POSITION > 57
-else if(User.PawnPosition.Last>= 57)
-ConsoleWriteLine(Congrats you won)
-Break game;
+[Fact]
+TestGameBoardTotalSquaresIsCorrect56()
+
+[Fact]
+TestIfPawnHaStartedIsFalseAndSetValueToTrue()
+
+[Theory]
+TestHowManyActivePawnsLeft(int amount)
+
+[Fact]
+TestIfPawnCanOccupySquarePosition()
 
 
 # DAGBOK
 ## 2020-03-30- Måndag [@Group]
 Vi har fått uppgiften introducerad för oss. Och skissar upp följande:
-
 Klasser
 Properties
 Metoder
@@ -146,12 +158,11 @@ GetSetOfPawns uses above methods to create 4 pawns with chosen color and return 
 ### Class Menu:
 HowManyPlayers() returns an int of how many players. This means that when we call for User.GetPlayersAndName(menu.HowManyPlayers()) we get an end result of all players with their name and choosen pawn color.
 
-
-
 ### Class Dice:
 Has Constructor with default Roll value.
-
 And a method for RollDice() wich returns a random int between 1 and 6.
+
+
 
 ## 2020-03-31- Tisdag [@Group]
 ### Current state of the game:
