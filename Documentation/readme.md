@@ -133,34 +133,7 @@ TestHowManyActivePawnsLeft(int amount)
 TestIfPawnCanOccupySquarePosition()
 
 
-# DAGBOK
-## 2020-03-30- Måndag [@Group]
-Vi har fått uppgiften introducerad för oss. Och skissar upp följande:
-Klasser
-Properties
-Metoder
-Scenarios
 
-### 2020-03-30- Måndag [@Adgnascor]
-Added basic functionality in following classes User,Pawn,Menu,Dice
-
-### Class User:
-Private Constructor that sets Name and gets Pawn.GetSetOfPawn(). Which gets called by method GetPlayersAndName(int numberOfPlayers). 
-This Method ask every user of their name and create users for each player and returns a List of players
-
-### Class Pawn:
-Constructor: Pawn(), ShowPawnColorMenu(), SetColorOnPawn(userChoice), GetSetOfPawn()
-
-ShowPawnColorMenu shows the color to choose between.
-SetColorOnPawn returns the color choice in form of a string.
-GetSetOfPawns uses above methods to create 4 pawns with chosen color and return this as a List of Pawns that User gets when we create every player.
-
-### Class Menu:
-HowManyPlayers() returns an int of how many players. This means that when we call for User.GetPlayersAndName(menu.HowManyPlayers()) we get an end result of all players with their name and choosen pawn color.
-
-### Class Dice:
-Has Constructor with default Roll value.
-And a method for RollDice() wich returns a random int between 1 and 6.
 
 
 
